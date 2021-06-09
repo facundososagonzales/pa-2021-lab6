@@ -4,7 +4,8 @@
         "iostream": "cpp",
         "memory": "cpp",
         "istream": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "list": "cpp"
     },
     "C_Cpp.dimInactiveRegions": false
 }

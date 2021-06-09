@@ -16,6 +16,9 @@ public:
     void ingresarEstudiante(string doc);
     void ingresarDocente(string instituto);
     void altaUsuario();
+    void iniciarSesion();
+    void cerrarSesion();
+    bool isLogged();
     ~CtrlAltaUsuario();
 };
 

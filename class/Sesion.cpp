@@ -15,8 +15,7 @@ Sesion* Sesion::getInstancia(){
     return instancia;
 }
 
-void Sesion::setLogin(TipoSesion tipoSesion){
-    tipoSesion=tipoSesion;
+void Sesion::setLogin(){
     iniciada = true;
 }
 
@@ -26,6 +25,14 @@ void Sesion::setLogout(){
 
 bool Sesion::checkIniciada(){
     return iniciada;
+}
+
+void Sesion::setUsuario(Usuario* usuario){
+    this->usuario = usuario;
+}
+
+string Sesion::getUsuario(){
+    return this->usuario->getemail();
 }
 
 Sesion::~Sesion(){}

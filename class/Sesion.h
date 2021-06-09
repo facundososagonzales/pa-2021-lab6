@@ -2,7 +2,7 @@
 #define SESION
 
 #include <string>
-#include "../dataType/TipoSesion.h"
+#include "../class/Usuario.h"
 
 using namespace std;
 
@@ -10,13 +10,15 @@ class Sesion{
   private:
     Sesion();
     static bool iniciada;
-    TipoSesion tipoSesion;
     static Sesion* instancia;
+    Usuario* usuario;
   public:
     static Sesion* getInstancia();
     static bool checkIniciada();
-    static void setLogin(TipoSesion);
+    static void setLogin();
     static void setLogout();
+    void setUsuario(Usuario*);
+    string getUsuario();
     ~Sesion();
 };
 

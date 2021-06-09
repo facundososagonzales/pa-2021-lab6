@@ -17,11 +17,13 @@ list<Usuario*> HandlerUsuario::getUsuarios(){
 }
 
 Usuario* HandlerUsuario::buscarUsuario(string email){
+    Usuario* userIter;
     for(list<Usuario*>::iterator it = this->usuarios.begin(); it!= this->usuarios.end();++it){
         if((*it)->getemail()==email){
-            return (*it);
+            userIter = (*it);
         }
     }
+    return userIter;
 }
 
 void HandlerUsuario::addUsuario(Usuario* usuario){
