@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "string": "cpp",
+        "iostream": "cpp",
+        "memory": "cpp",
+        "istream": "cpp",
+        "functional": "cpp"
+    },
+    "C_Cpp.dimInactiveRegions": false
+}
