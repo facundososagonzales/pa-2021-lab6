@@ -6,17 +6,17 @@
 
 using namespace std;
 
-class DtEsudiante : public DtUsuario{
+class DtEstudiante : public DtUsuario{
     private:
         string ci;
     public:
-        DtEsudiante();
-        DtEsudiante(string,string,string,string,string);
+        DtEstudiante();
+        DtEstudiante(string,string,string,string,string);
         string getci();
 
-        ~DtEsudiante();
+        ~DtEstudiante();
 
-        friend ostream& operator << (ostream&, const DtEsudiante&);
+        friend ostream& operator << (ostream&, const DtEstudiante&);
 };
 
 #endif

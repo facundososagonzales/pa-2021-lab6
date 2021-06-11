@@ -4,6 +4,8 @@
 #include <iostream>
 #include <list>
 #include "../class/Usuario.h"
+#include "../class/Estudiante.h"
+
 using namespace std;
 
 class HandlerUsuario{
@@ -16,6 +18,8 @@ public:
     list<Usuario*> getUsuarios();
     Usuario* buscarUsuario(string);
     void addUsuario(Usuario*);
+    bool existeUsuario(string);
+    bool existeEstudiante(string);
     virtual ~HandlerUsuario();
 };
 

@@ -1,18 +1,18 @@
 #include "../dataType/DtEstudiante.h"
 
-DtEsudiante::DtEsudiante(){}
+DtEstudiante::DtEstudiante(){}
 
-DtEsudiante::DtEsudiante(string nombre, string url, string email, string password, string ci): DtUsuario(nombre,url,email,password){
+DtEstudiante::DtEstudiante(string nombre, string url, string email, string password, string ci): DtUsuario(nombre,url,email,password){
     this->ci=ci;
 }
 
-string DtEsudiante::getci() {
+string DtEstudiante::getci() {
     return this->ci;
 }
 
-DtEsudiante::~DtEsudiante(){}
+DtEstudiante::~DtEstudiante(){}
 
-ostream& operator <<(ostream& salida, const DtEsudiante& dte){
+ostream& operator <<(ostream& salida, const DtEstudiante& dte){
 	cout <<(DtUsuario) dte << "CI: " << dte.ci << endl;
 	return salida;
 }
