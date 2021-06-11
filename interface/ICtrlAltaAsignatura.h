@@ -8,7 +8,7 @@ using namespace std;
 
 class ICtrlAltaAsignatura{
 public:    
-    virtual DtAsignatura ingresar(DtAsignatura datosAsignatura)=0;
+    virtual void ingresar(DtAsignatura datosAsignatura)=0;
     virtual void altaAsignatura()=0;
 };
 

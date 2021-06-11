@@ -16,6 +16,7 @@ class DtAsignatura{
         string getNombre();
         string getCodigo();
         DtInstanciaClase* getInstanciaClase();
+        friend ostream& operator << (ostream&, const DtAsignatura&);
         ~DtAsignatura();
 };
 

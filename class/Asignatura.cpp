@@ -23,6 +23,14 @@ void Asignatura::setNombre(string nombre) {
     this->nombre=nombre;
 }
 
+void Asignatura::setInstanciaClase(DtInstanciaClase* dtIC){
+    this->dtIC=dtIC;
+}
+
+DtInstanciaClase* Asignatura::getInstanciaClase(){
+    return this->dtIC;
+}
+
 list<Clase*> Asignatura::getClases() {
     return this->clases;
 }

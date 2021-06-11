@@ -17,14 +17,24 @@ list<Asignatura*> HandlerAsignatura::getAsignaturas(){
 }
 
 Asignatura* HandlerAsignatura::buscarAsignatura(string codigo){
-    Asignatura* asigIter;
-    for(list<Asignatura*>::iterator it = this->asignaturas.begin(); it!= this->asignaturas.end();++it){
-        if((*it)->getCodigo()==codigo){
-            asigIter = (*it);
+    Asignatura* asigIter=NULL;
+    for(Asignatura* a: asignaturas){
+        if(a->getCodigo()==codigo){
+            asigIter = a;
         }
     }
     return asigIter;
 }
+
+/*bool HandlerAsignatura::existeAsig(string codigo){
+    bool exis=false;
+    for(Asignatura* a: asignaturas){
+        if((a)->getCodigo()==codigo){
+            exis==true;
+        }
+    }
+    return exis;
+}  ***** NO USAR*****/
 
 void HandlerAsignatura::addAsignatura(Asignatura* asignatura){
     this->asignaturas.push_back(asignatura);

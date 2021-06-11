@@ -35,4 +35,8 @@ string Sesion::getUsuario(){
     return this->usuario->getemail();
 }
 
+string Sesion::getNombre(){
+    return this->usuario->getnombre();
+}
+
 Sesion::~Sesion(){}

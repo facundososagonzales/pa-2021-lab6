@@ -5,7 +5,12 @@
         "memory": "cpp",
         "istream": "cpp",
         "functional": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "new": "cpp",
+        "*.tcc": "cpp",
+        "string_view": "cpp"
     },
     "C_Cpp.dimInactiveRegions": false
 }

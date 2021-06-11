@@ -4,6 +4,7 @@
 #include<iostream>
 #include<list>
 #include "../class/Clase.h"
+#include "../dataType/DtInstanciaClase.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ class Asignatura{
 private:
     string codigo;
     string nombre;
+    DtInstanciaClase* dtIC;
     list <Clase*> clases;
 public:
     Asignatura();
@@ -23,6 +25,9 @@ public:
 
     void setNombre(string);
     string getNombre();
+
+    void setInstanciaClase(DtInstanciaClase*);
+    DtInstanciaClase* getInstanciaClase();
 
     void addClase(Clase*);
     list<Clase*> getClases();

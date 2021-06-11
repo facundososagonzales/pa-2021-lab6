@@ -10,7 +10,7 @@ private:
     DtAsignatura datosAsignatura;
 public:   
     CtrlAltaAsignatura();
-    DtAsignatura ingresar(DtAsignatura datosAsignatura);
+    void ingresar(DtAsignatura datosAsignatura);
     void altaAsignatura();
     ~CtrlAltaAsignatura();
 };

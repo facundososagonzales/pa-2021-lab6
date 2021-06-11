@@ -19,6 +19,7 @@ class Sesion{
     static void setLogout();
     void setUsuario(Usuario*);
     string getUsuario();
+    string getNombre();
     ~Sesion();
 };
 
