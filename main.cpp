@@ -7,6 +7,7 @@
 #include "Fabrica.h"
 #include "interface/ICtrlAltaUsuario.h"
 #include "interface/ICtrlAltaAsignatura.h"
+#include "interface/ICtrlAsignacionDocAsignatura.h"
 #include "dataType/DtDocente.h"
 #include "dataType/DtEstudiante.h"
 #include "dataType/DtAsignatura.h"
@@ -16,6 +17,7 @@ using namespace std;
 void iniciarSesion();
 void altaUsuario();
 void altaAsignatura();
+void asignacionDocenteAsignatura();
 
 void menu(){
 		//system("clear");
@@ -32,7 +34,7 @@ void menu(){
 		}		
 		cout <<"__________2. Alta Usuario___________________"<<endl;
 		cout <<"__________3. Alta Asignatura________________"<<endl;
-		cout <<"__________4. Agregar Arribo_________________"<<endl;
+		cout <<"__________4. Agregar Doc a asignatura_______"<<endl;
 		cout <<"__________5. Obtener info de arribos________"<<endl;
 		cout <<"__________6. Eliminar Arribos_______________"<<endl;
 		cout <<"__________7. Listar Barcos__________________"<<endl;
@@ -47,15 +49,14 @@ int main(){
 	cin >> opcion;
 	while(opcion != 8){
 		switch(opcion){
-			case 1:
-				iniciarSesion();
-			break;
-			case 2:
-				altaUsuario();
-			break;
-			case 3:
-				altaAsignatura();
-			break;
+			case 1: iniciarSesion();  			   break;
+
+			case 2: altaUsuario();    			   break;
+
+			case 3: altaAsignatura();			   break;
+
+			case 4: asignacionDocenteAsignatura(); break;
+
 			default:
 				cout << "OPCIÓN INCORRECTA" << endl;
 		}
@@ -204,4 +205,67 @@ void altaAsignatura(){
 		icaa->ingresar(dta);
 		icaa->altaAsignatura();
 	}
+}
+
+////////////////////////////////////////////> Operaciones D <//////////////////////////////////////////////////
+
+void asignacionDocenteAsignatura(){
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"______________Asignar Docente________________"<< endl;
+	cout <<"_____________________________________________" <<endl;
+
+	string codigo,email, confirmar;
+	int seleccion;
+	TipoRol rol;
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlAsignacionDocAsignatura* icada = fab->getICtrlAsignacionDocAsignatura();
+
+	for(string s: icada->listarAsignaturas()){
+		cout << "Asignatura: " + s << endl;
+	}
+	cout << "Seleccionar asignatura para asignarle docente: ";
+	cin >> codigo;
+
+	do{
+		
+		for (string s: icada->docentesSinAsignar(codigo)){
+			cout << "Docente email: " + s << endl;
+		}
+		cout << "Seleccionar docente: ";
+		cin >> email;
+
+		do{
+			cout << "\nTeorico: 1	Practico: 2    Monitoreo: 3" << endl;
+			cout << "Seleccionar rol: ";
+			cin >> seleccion;
+		}while(seleccion!=1 && seleccion!=2 && seleccion!=3);
+
+		switch(seleccion){
+			case 1: rol = Teorico; 		  break;
+			case 2: rol = Practico; 	  break;
+			case 3: rol = Monitoreo;	  break;
+		}
+
+		icada->seleccionarDocente(email,rol);
+
+		do{
+			cout << "\nDocente: " + email << endl ;
+			cout << "Asignatura: " + codigo <<endl;
+			cout << "Rol: " + rol <<endl;
+			cout << "Desea agregar el docente a la asignatura? (s/n): ";
+			cin >> confirmar;
+
+			if(confirmar=="s"){
+				icada->asignarDocente();
+			}else if(confirmar!="n"){
+				cout << "opcion incorrecta, intente de nuevo" << endl;
+			}
+		}while(confirmar!="s" && confirmar!="n");
+
+		cout<< "Desea seguir agregando docentes? (s/n): ";
+		cin >> confirmar;
+
+	}while(confirmar!="n");
+
 }

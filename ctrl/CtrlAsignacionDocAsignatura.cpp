@@ -53,6 +53,8 @@ void CtrlAsignacionDocAsignatura::asignarDocente(){
     Usuario* usuario = hU->buscarUsuario(this->docente);
     Asignatura* asignatura = hA->buscarAsignatura(this->asignatura);
 
+    //Verificar que el rol pasado sea el mismo que alguno de la asignatura
+
     Rol* rol = new Rol(this->rol,asignatura);
     Docente* doc = dynamic_cast<Docente*>(usuario);
     if(doc!=NULL){
