@@ -3,6 +3,7 @@
 
 #include "interface/ICtrlAltaAsignatura.h"
 #include "interface/ICtrlAltaUsuario.h"
+#include "interface/ICtrlAsignacionDocAsignatura.h"
 
 class Fabrica{
     private:
@@ -12,6 +13,7 @@ class Fabrica{
         static Fabrica* getInstancia();
         static ICtrlAltaUsuario* getICtrlAltaUsuario();
         static ICtrlAltaAsignatura* getICtrlAltaAsignatura();
+        static ICtrlAsignacionDocAsignatura* getICtrlAsignacionDocAsignatura();
         
         ~Fabrica();
         
