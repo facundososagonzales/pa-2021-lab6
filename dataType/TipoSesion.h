@@ -1,6 +1,12 @@
-#ifndef TIPOROL_H
-#define TIPOROL_H
+#ifndef TIPOSESION_H
+#define TIPOSESION_H
 
-enum TipoSesion{Estudiante,Docente};
+using namespace std;
+
+namespace SesionType{
+
+    enum TipoSesion{Estudiante,Docente};
+
+}
 
 #endif

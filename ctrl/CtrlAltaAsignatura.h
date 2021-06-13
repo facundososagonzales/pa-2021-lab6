@@ -12,6 +12,7 @@ public:
     CtrlAltaAsignatura();
     void ingresar(DtAsignatura datosAsignatura);
     void altaAsignatura();
+    void cargarAsignaturas();
     ~CtrlAltaAsignatura();
 };
 

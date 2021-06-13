@@ -10,6 +10,7 @@ class ICtrlAltaAsignatura{
 public:    
     virtual void ingresar(DtAsignatura datosAsignatura)=0;
     virtual void altaAsignatura()=0;
+    virtual void cargarAsignaturas()=0;
 };
 
 #endif

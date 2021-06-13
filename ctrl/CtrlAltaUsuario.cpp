@@ -34,19 +34,15 @@ void CtrlAltaUsuario::altaUsuario(DtUsuario& usuario){
         cout << "El email ingresado ya existe" << endl; 
     }else{
         try{
-            cout << "1-";
             DtDocente& dtDoc = dynamic_cast<DtDocente&>(usuario);
             Docente* docente = new Docente(dtDoc.getnombre(),dtDoc.geturl(),dtDoc.getemail(),dtDoc.getpass(),dtDoc.getInstituto());
             hU->addUsuario(docente);
-             cout << "2-";
         }catch(bad_cast){
-            try{                
-                 cout << "3-";
+            try{
                 DtEstudiante& dtEst = dynamic_cast<DtEstudiante&>(usuario);
                 if(hU->existeEstudiante(this->doc)){
                     cout << "El documento ingresado ya existe" << endl;
                 }else{
-                    cout << "4-";
                     Estudiante* estudiante = new Estudiante(dtEst.getnombre(),dtEst.geturl(),dtEst.getemail(),dtEst.getpass(),dtEst.getci());
                     hU->addUsuario(estudiante);
                 }
@@ -88,6 +84,22 @@ void CtrlAltaUsuario::cerrarSesion(){
 bool CtrlAltaUsuario::isLogged(){
     Sesion* sesion = Sesion::getInstancia();
     return sesion->checkIniciada();
+}
+
+SesionType::TipoSesion CtrlAltaUsuario::getTipo(){
+    Sesion* sesion = Sesion::getInstancia();
+    return sesion->getTipo();
+}
+
+void CtrlAltaUsuario::cargarUsuarios(){
+
+    HandlerUsuario* hU = HandlerUsuario::getInstancia();
+    Docente* doc1 = new Docente("admin","imgur.com/g2f13a49.png","admin@fing.edu", "admin", "fing");
+    Docente* doc2 = new Docente("doc1","imgur.com/g2f13a49.png","doc1@fing.edu", "doc1", "fing");
+    Docente* doc3 = new Docente("doc2","imgur.com/g2f13a49.png","doc2@gmail.com", "doc2", "fing");
+    Docente* doc4 = new Docente("doc3","imgur.com/g2f13a49.png","doc3@hotmail.com", "doc3", "fing");
+    
+    hU->addUsuario(doc1); hU->addUsuario(doc2); hU->addUsuario(doc3); hU->addUsuario(doc4);
 }
 
 CtrlAltaUsuario::~CtrlAltaUsuario(){}

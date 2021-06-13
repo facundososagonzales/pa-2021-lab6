@@ -22,7 +22,9 @@ public:
     void altaUsuario(DtUsuario& usuario);
     void iniciarSesion();
     void cerrarSesion();
-    bool isLogged();    
+    bool isLogged();
+    SesionType::TipoSesion getTipo();
+    void cargarUsuarios();
     ~CtrlAltaUsuario();
 };
 

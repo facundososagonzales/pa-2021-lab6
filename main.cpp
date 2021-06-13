@@ -20,13 +20,13 @@ void altaAsignatura();
 void asignacionDocenteAsignatura();
 
 void menu(){
+		Fabrica* fab = Fabrica::getInstancia();
+		ICtrlAltaUsuario* icau = fab->getICtrlAltaUsuario();
 		//system("clear");
 		cout <<"____________________________________________"<<endl;
 		cout <<"_________________Bienvenido_________________"<<endl;
 		cout <<"________________Elija opcion:_______________"<<endl;
 		cout <<"____________________________________________"<<endl;
-		Fabrica* fab = Fabrica::getInstancia();
-		ICtrlAltaUsuario* icau = fab->getICtrlAltaUsuario();
 		if(!icau->isLogged()){
 			cout <<"__________1. Iniciar Sesion_________________"<<endl;
 		}else{
@@ -44,6 +44,11 @@ void menu(){
 }
 
 int main(){
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlAltaUsuario* icau = fab->getICtrlAltaUsuario();
+	ICtrlAltaAsignatura* icaa = fab->getICtrlAltaAsignatura();
+	icau->cargarUsuarios();
+	icaa->cargarAsignaturas();
 	int opcion;
 	menu();
 	cin >> opcion;
@@ -213,59 +218,70 @@ void asignacionDocenteAsignatura(){
 	system("clear");
 	cout <<"_____________________________________________" <<endl;
 	cout <<"______________Asignar Docente________________"<< endl;
-	cout <<"_____________________________________________" <<endl;
+	cout <<"_____________________________________________\n" <<endl;
 
 	string codigo,email, confirmar;
 	int seleccion;
 	TipoRol rol;
 	Fabrica* fab = Fabrica::getInstancia();
 	ICtrlAsignacionDocAsignatura* icada = fab->getICtrlAsignacionDocAsignatura();
+	list<string> asignaturas = icada->listarAsignaturas();
 
-	for(string s: icada->listarAsignaturas()){
-		cout << "Asignatura: " + s << endl;
-	}
-	cout << "Seleccionar asignatura para asignarle docente: ";
-	cin >> codigo;
-
-	do{
-		
-		for (string s: icada->docentesSinAsignar(codigo)){
-			cout << "Docente email: " + s << endl;
+	if(!asignaturas.empty()){
+		for(string s: asignaturas){
+			cout << "Asignatura: " + s << endl;
 		}
-		cout << "Seleccionar docente: ";
-		cin >> email;
-
+		cout << "\nSeleccionar asignatura para asignarle docente: ";
+		cin >> codigo;
+		cout << "\n";
 		do{
-			cout << "\nTeorico: 1	Practico: 2    Monitoreo: 3" << endl;
-			cout << "Seleccionar rol: ";
-			cin >> seleccion;
-		}while(seleccion!=1 && seleccion!=2 && seleccion!=3);
+			list<string> docentesSinAsignar = icada->docentesSinAsignar(codigo);
+			if(!docentesSinAsignar.empty()){
+				for (string s: docentesSinAsignar){
+					cout << "Email de docente: " + s << endl;
+				}
+				cout << "\nSeleccionar docente: ";
+				cin >> email;
 
-		switch(seleccion){
-			case 1: rol = Teorico; 		  break;
-			case 2: rol = Practico; 	  break;
-			case 3: rol = Monitoreo;	  break;
-		}
+				do{
+					cout << "\nTeorico: 1	Practico: 2    Monitoreo: 3" << endl;
+					cout << "\nSeleccionar rol: ";
+					cin >> seleccion;
+				}while(seleccion!=1 && seleccion!=2 && seleccion!=3);
 
-		icada->seleccionarDocente(email,rol);
+				switch(seleccion){
+					case 1: rol = Teorico; 		  break;
+					case 2: rol = Practico; 	  break;
+					case 3: rol = Monitoreo;	  break;
+				}
 
-		do{
-			cout << "\nDocente: " + email << endl ;
-			cout << "Asignatura: " + codigo <<endl;
-			cout << "Rol: " + rol <<endl;
-			cout << "Desea agregar el docente a la asignatura? (s/n): ";
-			cin >> confirmar;
+				icada->seleccionarDocente(email,rol);
 
-			if(confirmar=="s"){
-				icada->asignarDocente();
-			}else if(confirmar!="n"){
-				cout << "opcion incorrecta, intente de nuevo" << endl;
+				do{
+					string roles[3] = {"Teorico","Practico","Monitoreo"};
+					cout << "\nDocente: " + email << endl ;
+					cout << "Asignatura: " + codigo <<endl;
+					cout << "Rol: " + roles[rol] <<endl;
+					cout << "Desea agregar el docente a la asignatura? (s/n): ";
+					cin >> confirmar;
+
+					if(confirmar=="s"){
+						icada->asignarDocente();
+					}else if(confirmar!="n"){
+						cout << "opcion incorrecta, intente de nuevo" << endl;
+					}
+				}while(confirmar!="s" && confirmar!="n");
+			}else{
+				cout<< "No hay docentes para asignar" << endl;
 			}
-		}while(confirmar!="s" && confirmar!="n");
+			cout<< "\nDesea seguir agregando docentes? (s/n): ";
+			cin >> confirmar;
+			cout <<"\n";
 
-		cout<< "Desea seguir agregando docentes? (s/n): ";
-		cin >> confirmar;
+		}while(confirmar!="n");
 
-	}while(confirmar!="n");
+	}else{
+		cout << "\nNo hay asignaturas para agregarles docentes\n" << endl;
+	}
 
 }
