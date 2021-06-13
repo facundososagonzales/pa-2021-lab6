@@ -228,21 +228,52 @@ void asignacionDocenteAsignatura(){
 	list<string> asignaturas = icada->listarAsignaturas();
 
 	if(!asignaturas.empty()){
-		for(string s: asignaturas){
-			cout << "Asignatura: " + s << endl;
-		}
-		cout << "\nSeleccionar asignatura para asignarle docente: ";
-		cin >> codigo;
-		cout << "\n";
+		bool existeEnLista=false;
+
+		do{
+			for(string s: asignaturas){
+				cout << "Asignatura: " + s << endl;
+			}
+			cout << "\nSeleccionar asignatura para asignarle docente: ";
+			cin >> codigo; cout << codigo;
+			cout << "\n";
+
+			for(string s: asignaturas){
+				if(s==codigo){
+					existeEnLista=true;
+				}
+			}
+			if(!existeEnLista){
+				cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
+			}
+
+		}while(!existeEnLista);
+		
 		do{
 			list<string> docentesSinAsignar = icada->docentesSinAsignar(codigo);
 			if(!docentesSinAsignar.empty()){
-				for (string s: docentesSinAsignar){
-					cout << "Email de docente: " + s << endl;
-				}
-				cout << "\nSeleccionar docente: ";
-				cin >> email;
+				
+				existeEnLista=false;
 
+				do{
+					for (string s: docentesSinAsignar){
+						cout << "Email de docente: " + s << endl;
+					}
+					cout << "\nSeleccionar docente: ";
+					cin >> email;
+
+					for(string s: docentesSinAsignar){
+						if(s==email){
+							existeEnLista=true;
+						}
+					}
+
+					if(!existeEnLista){
+						cout << "Error al ingresar docente, intente de nuevo\n"<< endl;
+					}
+
+				}while(!existeEnLista);
+				
 				do{
 					cout << "\nTeorico: 1	Practico: 2    Monitoreo: 3" << endl;
 					cout << "\nSeleccionar rol: ";
