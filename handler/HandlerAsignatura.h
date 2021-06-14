@@ -15,6 +15,7 @@ private:
 public:
     static HandlerAsignatura* getInstancia();
     list<Asignatura*> getAsignaturas();
+    list<string> getCodAsignaturas();
     Asignatura* buscarAsignatura(string);
     bool existeAsig(string);
     void addAsignatura(Asignatura*);

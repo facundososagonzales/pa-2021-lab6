@@ -16,6 +16,13 @@ list<Asignatura*> HandlerAsignatura::getAsignaturas(){
     return asignaturas;
 }
 
+list<string> HandlerAsignatura::getCodAsignaturas(){
+    list<string> codAsignaturas;
+    for(Asignatura* a: this->asignaturas){
+        codAsignaturas.push_back(a->getCodigo());
+    }
+}
+
 Asignatura* HandlerAsignatura::buscarAsignatura(string codigo){
     Asignatura* asigIter=NULL;
     for(Asignatura* a: asignaturas){
