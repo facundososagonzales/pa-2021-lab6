@@ -3,13 +3,13 @@
 
 #include <iostream>
 #include "../interface/ICtrlInscripcionAsignatura.h"
+#include "../class/Estudiante.h"
 
 using namespace std;
 
 class CtrlInscripcionAsignatura: public ICtrlInscripcionAsignatura{
 
 private:
-    Estudiante* estudiante;
     string codigo;
 public:   
     CtrlInscripcionAsignatura();

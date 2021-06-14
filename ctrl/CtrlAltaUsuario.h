@@ -23,7 +23,7 @@ public:
     void iniciarSesion();
     void cerrarSesion();
     bool isLogged();
-    SesionType::TipoSesion getTipo();
+    bool isDocente();
     void cargarUsuarios();
     ~CtrlAltaUsuario();
 };

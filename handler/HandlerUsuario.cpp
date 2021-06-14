@@ -17,7 +17,7 @@ list<Usuario*> HandlerUsuario::getUsuarios(){
 }
 
 Usuario* HandlerUsuario::buscarUsuario(string email){
-    Usuario* userIter;
+    Usuario* userIter = NULL;
     for(list<Usuario*>::iterator it = this->usuarios.begin(); it!= this->usuarios.end();++it){
         if((*it)->getemail()==email){
             userIter = (*it);

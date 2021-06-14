@@ -31,20 +31,12 @@ void Sesion::setUsuario(Usuario* usuario){
     this->usuario = usuario;
 }
 
-void Sesion::setTipo(SesionType::TipoSesion tipo){
-    this->tipo = tipo;
-}
-
 string Sesion::getUsuario(){
     return this->usuario->getemail();
 }
 
 string Sesion::getNombre(){
     return this->usuario->getnombre();
-}
-
-SesionType::TipoSesion Sesion::getTipo(){
-    return this->tipo;
 }
 
 Sesion::~Sesion(){}

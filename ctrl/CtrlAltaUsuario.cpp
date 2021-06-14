@@ -54,22 +54,27 @@ void CtrlAltaUsuario::altaUsuario(DtUsuario& usuario){
 void CtrlAltaUsuario::iniciarSesion(){
     HandlerUsuario* hU = HandlerUsuario::getInstancia();
     Usuario* usuario = hU->buscarUsuario(this->email);
-    if(usuario->getpassword()==this->password){
-        Sesion* sesion = Sesion::getInstancia();
-        if(sesion->checkIniciada()==false){
-            Docente* docente = dynamic_cast<Docente*>(usuario);
-            if(docente==NULL){
-                Estudiante* estudiante = dynamic_cast<Estudiante*>(usuario);
-                sesion->setLogin();
-                sesion->setUsuario(estudiante);
-            }else if(docente!=NULL){
-                sesion->setLogin();
-                sesion->setUsuario(docente);
+    if(usuario!=NULL){
+        if(usuario->getpassword()==this->password){
+            Sesion* sesion = Sesion::getInstancia();
+            if(sesion->checkIniciada()==false){
+                Docente* docente = dynamic_cast<Docente*>(usuario);
+                if(docente==NULL){
+                    Estudiante* estudiante = dynamic_cast<Estudiante*>(usuario);
+                    sesion->setLogin();
+                    sesion->setUsuario(estudiante);
+                    cout << "Bienvenido estudiante " + usuario->getnombre() << endl;
+                }else if(docente!=NULL){
+                    sesion->setLogin();
+                    sesion->setUsuario(docente);
+                    cout << "Bienvenido docente " + usuario->getnombre() << endl;
+                }
             }
-        cout << "Bienvenido usuario " + usuario->getnombre() << endl;
+        }else{
+            cout << "Los datos ingresados no coinciden con ningun usuario registrado" << endl;
         }
     }else{
-        cout << "Email o password incorrectos" << endl;
+        cout << "Los datos ingresados no coinciden con ningun usuario registrado" << endl;
     }
 }
 
@@ -86,9 +91,14 @@ bool CtrlAltaUsuario::isLogged(){
     return sesion->checkIniciada();
 }
 
-SesionType::TipoSesion CtrlAltaUsuario::getTipo(){
+bool CtrlAltaUsuario::isDocente(){
     Sesion* sesion = Sesion::getInstancia();
-    return sesion->getTipo();
+    HandlerUsuario* hU = HandlerUsuario::getInstancia();
+    Docente* doc = dynamic_cast<Docente*>(hU->buscarUsuario(sesion->getUsuario()));
+    if(doc==NULL)
+        return false;
+    else
+        return true;
 }
 
 void CtrlAltaUsuario::cargarUsuarios(){
@@ -98,8 +108,16 @@ void CtrlAltaUsuario::cargarUsuarios(){
     Docente* doc2 = new Docente("doc1","imgur.com/g2f13a49.png","doc1@fing.edu", "doc1", "fing");
     Docente* doc3 = new Docente("doc2","imgur.com/g2f13a49.png","doc2@gmail.com", "doc2", "fing");
     Docente* doc4 = new Docente("doc3","imgur.com/g2f13a49.png","doc3@hotmail.com", "doc3", "fing");
+    Docente* test = new Docente("test","imgur.com/g2f13a49.png","test", "test", "fing");
     
-    hU->addUsuario(doc1); hU->addUsuario(doc2); hU->addUsuario(doc3); hU->addUsuario(doc4);
+    hU->addUsuario(doc1); hU->addUsuario(doc2); hU->addUsuario(doc3); hU->addUsuario(doc4); hU->addUsuario(test);
+
+    Estudiante* est = new Estudiante("est","imgur.com/g2f13a49.png","est", "est", "1");
+    Estudiante* est1 = new Estudiante("est1","imgur.com/g2f13a49.png","est1@gmail.com", "est1", "2");
+    Estudiante* est2 = new Estudiante("est2","imgur.com/g2f13a49.png","est2@fing.edu", "est2pass", "3");
+    Estudiante* est3 = new Estudiante("est3","imgur.com/g2f13a49.png","est3@gmail.com", "est3", "4");
+
+    hU->addUsuario(est); hU->addUsuario(est1); hU->addUsuario(est2); hU->addUsuario(est3);
 }
 
 CtrlAltaUsuario::~CtrlAltaUsuario(){}

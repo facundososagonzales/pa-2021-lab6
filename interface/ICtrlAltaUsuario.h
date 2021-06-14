@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "../dataType/DtUsuario.h"
-#include "../dataType/TipoSesion.h"
 
 using namespace std;
 
@@ -18,7 +17,7 @@ public:
     virtual void iniciarSesion()=0;
     virtual void cerrarSesion()=0;
     virtual bool isLogged()=0;
-    virtual SesionType::TipoSesion getTipo()=0;
+    virtual bool isDocente()=0;
     virtual void cargarUsuarios()=0;
 };
 

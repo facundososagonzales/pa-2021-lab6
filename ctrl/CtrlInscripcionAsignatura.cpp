@@ -17,7 +17,6 @@ list<string> CtrlInscripcionAsignatura::asignaturaNoInscripto(){
     bool estaInscripto;
 
     if (estudianteLog!=NULL){
-        this->estudiante=estudianteLog;
         list<Asignatura*> asigInscripto = estudianteLog->getAsignaturas();
         for(string cod: codAsignaturas){
             estaInscripto=false;
@@ -30,8 +29,8 @@ list<string> CtrlInscripcionAsignatura::asignaturaNoInscripto(){
                 asigNoInscripto.push_back(cod);
             }
         }
-        return asigNoInscripto;
     }
+    return asigNoInscripto;
 }
 
 void CtrlInscripcionAsignatura::seleccionarAsignatura(string codigo){
@@ -39,8 +38,15 @@ void CtrlInscripcionAsignatura::seleccionarAsignatura(string codigo){
 }
 
 void CtrlInscripcionAsignatura::darDeAltaInscripcion(){
+    Sesion* sesion = Sesion::getInstancia();
+    HandlerUsuario* hU = HandlerUsuario::getInstancia();
     HandlerAsignatura* hA = HandlerAsignatura::getInstancia();
     Asignatura* asignatura = hA->buscarAsignatura(this->codigo);
 
-    this->estudiante->addAsignatura(asignatura);
+    Usuario* usuarioLog = hU->buscarUsuario(sesion->getUsuario());
+    Estudiante* estudianteLog = dynamic_cast<Estudiante*>(usuarioLog);
+    if(estudianteLog!=NULL){
+        estudianteLog->addAsignatura(asignatura);
+        cout << "La inscripcion ha sido creada correctamente" << endl;
+    }
 }

@@ -8,6 +8,7 @@
 #include "interface/ICtrlAltaUsuario.h"
 #include "interface/ICtrlAltaAsignatura.h"
 #include "interface/ICtrlAsignacionDocAsignatura.h"
+#include "interface/ICtrlInscripcionAsignatura.h"
 #include "dataType/DtDocente.h"
 #include "dataType/DtEstudiante.h"
 #include "dataType/DtAsignatura.h"
@@ -18,6 +19,8 @@ void iniciarSesion();
 void altaUsuario();
 void altaAsignatura();
 void asignacionDocenteAsignatura();
+void inscripcionAsignatura();
+void inicioDeClase();
 
 void menu(){
 		Fabrica* fab = Fabrica::getInstancia();
@@ -35,7 +38,9 @@ void menu(){
 		cout <<"__________2. Alta Usuario___________________"<<endl;
 		cout <<"__________3. Alta Asignatura________________"<<endl;
 		cout <<"__________4. Agregar Doc a asignatura_______"<<endl;
-		cout <<"__________5. Obtener info de arribos________"<<endl;
+		if(icau->isLogged() && !icau->isDocente()){
+			cout <<"__________5. Inscripcion a asignatura_______"<<endl;
+		}
 		cout <<"__________6. Eliminar Arribos_______________"<<endl;
 		cout <<"__________7. Listar Barcos__________________"<<endl;
 		cout <<"__________8. Salir__________________________"<<endl;
@@ -54,14 +59,17 @@ int main(){
 	cin >> opcion;
 	while(opcion != 8){
 		switch(opcion){
-			case 1: iniciarSesion();  			   break;
+			case 1: iniciarSesion();  			   						  break;
 
-			case 2: altaUsuario();    			   break;
+			case 2: altaUsuario();    			   						  break;
 
-			case 3: altaAsignatura();			   break;
+			case 3: altaAsignatura();			   						  break;
 
-			case 4: asignacionDocenteAsignatura(); break;
+			case 4: asignacionDocenteAsignatura(); 						  break;
 
+			case 5: if(icau->isLogged() && !icau->isDocente()){ inscripcionAsignatura();      
+					}else if(icau->isLogged()){ inicioDeClase();}         break;
+			
 			default:
 				cout << "OPCIÓN INCORRECTA" << endl;
 		}
@@ -316,3 +324,66 @@ void asignacionDocenteAsignatura(){
 	}
 
 }
+
+////////////////////////////////////////////> Operaciones E <//////////////////////////////////////////////////
+
+void inscripcionAsignatura(){
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"___________Inscripcion a asignatura__________"<< endl;
+	cout <<"_____________________________________________\n" <<endl;
+
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlInscripcionAsignatura* icia = fab->getICtrlInscripcionAsignatura();
+
+	string confirmar, codigo;
+
+	do{
+		
+		list<string> asignaturas = icia->asignaturaNoInscripto();
+		
+		if(!asignaturas.empty()){
+			bool existeEnLista=false;
+
+			do{
+				for(string s: asignaturas){
+					cout << "Asignatura: " + s << endl;
+				}
+				cout << "\nSeleccionar la asignatura a la que se desea inscribir: ";
+				cin >> codigo;
+				cout << "\n";
+
+				for(string s: asignaturas){
+					if(s==codigo){
+						existeEnLista=true;
+					}
+				}
+				if(!existeEnLista){
+					cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
+				}
+
+			}while(!existeEnLista);
+
+			icia->seleccionarAsignatura(codigo);
+
+			do{
+				cout << "Confria la inscripcion a la asignatura " + codigo +"? (s/n): ";
+				cin >> confirmar;
+
+				if(confirmar=="s"){
+					icia->darDeAltaInscripcion();
+				}else if(confirmar!="n"){
+					cout << "opcion incorrecta, intente de nuevo" << endl;
+				}
+			}while(confirmar!="s" && confirmar!="n");
+
+			cout<< "\nDesea seguir inscribiendose a asignaturas? (s/n): ";
+			cin >> confirmar;
+			cout <<"\n";
+		}
+	}while(confirmar!="n");
+}
+
+////////////////////////////////////////////> Operaciones F <//////////////////////////////////////////////////
+
+void inicioDeClase(){}

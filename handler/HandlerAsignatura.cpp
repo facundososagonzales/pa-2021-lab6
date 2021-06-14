@@ -21,6 +21,7 @@ list<string> HandlerAsignatura::getCodAsignaturas(){
     for(Asignatura* a: this->asignaturas){
         codAsignaturas.push_back(a->getCodigo());
     }
+    return codAsignaturas;
 }
 
 Asignatura* HandlerAsignatura::buscarAsignatura(string codigo){
