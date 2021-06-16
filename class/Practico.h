@@ -3,12 +3,14 @@
 
 #include "../class/Clase.h"
 
-class Practico : public Clase{
-public:
-    Practico();
-    Practico(int, string, DtHora, DtHora, string, list<Docente*>);
+namespace cp{
+    class Practico : public Clase{
+    public:
+        Practico();
+        Practico(int, string, DtHora, list<Docente*>);
 
-    ~Practico();
-};
+        ~Practico();
+    };
+}
 
 #endif

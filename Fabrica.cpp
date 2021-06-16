@@ -3,6 +3,7 @@
 #include "ctrl/CtrlAltaAsignatura.h"
 #include "ctrl/CtrlAsignacionDocAsignatura.h"
 #include "ctrl/CtrlInscripcionAsignatura.h"
+#include "ctrl/CtrlInicioDeClase.h"
 
 Fabrica* Fabrica::instancia = NULL;
 
@@ -28,4 +29,8 @@ ICtrlAsignacionDocAsignatura* Fabrica::getICtrlAsignacionDocAsignatura(){
 
 ICtrlInscripcionAsignatura* Fabrica::getICtrlInscripcionAsignatura(){
     return new CtrlInscripcionAsignatura();
+}
+
+ICtrlInicioDeClase* Fabrica::getICtrlInicioDeClase(){
+    return new CtrlInicioDeClase();
 }

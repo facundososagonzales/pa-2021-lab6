@@ -5,6 +5,7 @@
 #include "interface/ICtrlAltaUsuario.h"
 #include "interface/ICtrlAsignacionDocAsignatura.h"
 #include "interface/ICtrlInscripcionAsignatura.h"
+#include "interface/ICtrlInicioDeClase.h"
 
 class Fabrica{
     private:
@@ -16,6 +17,7 @@ class Fabrica{
         static ICtrlAltaAsignatura* getICtrlAltaAsignatura();
         static ICtrlAsignacionDocAsignatura* getICtrlAsignacionDocAsignatura();
         static ICtrlInscripcionAsignatura* getICtrlInscripcionAsignatura();
+        static ICtrlInicioDeClase* getICtrlInicioDeClase();
         
         ~Fabrica();
         

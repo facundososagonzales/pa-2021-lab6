@@ -26,6 +26,17 @@ Clase* HandlerClase::buscarClase(int id){
     return claseIter;
 }
 
+bool HandlerClase::existeClase(int id){
+    bool existeId = false;
+    for(list<Clase*>::iterator it = this->clases.begin(); it!= this->clases.end();++it){
+        if((*it)->getId()==id){
+            existeId = true;
+        }
+    }
+    return existeId;
+}
+
+
 void HandlerClase::addClase(Clase* clase){
     this->clases.push_back(clase);
 }

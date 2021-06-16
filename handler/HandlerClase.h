@@ -16,6 +16,7 @@ public:
     list<Clase*> getClases();
     Clase* buscarClase(int);
     void addClase(Clase*);
+    bool existeClase(int);
     virtual ~HandlerClase();
 };
 

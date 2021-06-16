@@ -1,18 +1,16 @@
 #include "../class/Teorico.h"
 
-Teorico::Teorico(){}
+ct::Teorico::Teorico(){}
 
-Teorico::Teorico(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo, list<Docente*> docente, int cantAsiste)
-:Clase(id, nombre, inicio, fin, rutaVideo, docente){
+ct::Teorico::Teorico(int id, string nombre, DtHora inicio, list<Docente*> docente)
+:Clase(id, nombre, inicio, docente){}
+
+void ct::Teorico::setCantAsiste(int cantAsiste) {
     this->cantAsiste=cantAsiste;
 }
 
-void Teorico::setCantAsiste(int cantAsiste) {
-    this->cantAsiste=cantAsiste;
-}
-
-int Teorico::getCantAsiste() {
+int ct::Teorico::getCantAsiste() {
     return this->cantAsiste;
 }
 
-Teorico::~Teorico(){}
+ct::Teorico::~Teorico(){}

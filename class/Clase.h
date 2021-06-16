@@ -25,6 +25,7 @@ private:
     list<AsisteDiferido*> asistenciasDiferidos;
 public:
     Clase();
+    Clase(int, string, DtHora, list<Docente*>);
     Clase(int, string, DtHora, DtHora, string, list<Docente*>);
 
     void setId(int);

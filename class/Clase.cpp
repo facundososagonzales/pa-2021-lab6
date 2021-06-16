@@ -2,6 +2,13 @@
 
 Clase::Clase(){}
 
+Clase::Clase(int id, string nombre, DtHora inicio, list<Docente*> docente){
+    this->id=id;
+    this->nombre=nombre;
+    this->inicio=inicio;
+    this->docentes=docente; 
+}
+
 Clase::Clase(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo, list<Docente*> docente){
     this->id=id;
     this->nombre=nombre;

@@ -3,17 +3,19 @@
 
 #include "../class/Clase.h"
 
-class Teorico : public Clase{
-private:
-    int cantAsiste;
-public:
-    Teorico();
-    Teorico(int, string, DtHora, DtHora, string, list<Docente*>, int);
+namespace ct{
+    class Teorico : public Clase{
+    private:
+        int cantAsiste;
+    public:
+        Teorico();
+        Teorico(int, string, DtHora, list<Docente*>);
 
-    void setCantAsiste(int);
-    int getCantAsiste();
+        void setCantAsiste(int);
+        int getCantAsiste();
 
-    ~Teorico();
-};
+        ~Teorico();
+    };
+}
 
 #endif

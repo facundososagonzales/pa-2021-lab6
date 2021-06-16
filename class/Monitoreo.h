@@ -6,17 +6,19 @@
 
 class Estudiante;
 
-class Monitoreo : public Clase{
-private:
-    list <Estudiante*> estudiantes;
-public:
-    Monitoreo();
-    Monitoreo(int, string, DtHora, DtHora, string, list<Docente*>, list<Estudiante*>);
+namespace cm{
+    class Monitoreo : public Clase{
+    private:
+        list <Estudiante*> estudiantes;
+    public:
+        Monitoreo();
+        Monitoreo(int, string, DtHora, list<Docente*>, list<Estudiante*>);
 
-    void addEstudiante(Estudiante*);
-    list <Estudiante*> getEstudiantes();
+        void addEstudiante(Estudiante*);
+        list <Estudiante*> getEstudiantes();
 
-    ~Monitoreo();
-};
+        ~Monitoreo();
+    };
+}
 
 #endif

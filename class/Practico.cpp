@@ -1,8 +1,8 @@
 #include "../class/Practico.h"
 
-Practico::Practico(){}
+cp::Practico::Practico(){}
 
-Practico::Practico(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo, list<Docente*> docente)
-:Clase(id, nombre, inicio, fin, rutaVideo, docente){}
+cp::Practico::Practico(int id, string nombre, DtHora inicio, list<Docente*> docente)
+:Clase(id, nombre, inicio, docente){}
 
-Practico::~Practico(){}
+cp::Practico::~Practico(){}
