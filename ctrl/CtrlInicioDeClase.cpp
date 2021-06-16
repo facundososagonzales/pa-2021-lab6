@@ -114,17 +114,21 @@ void CtrlInicioDeClase::iniciarClase(){
                 list<Docente*> docentes; docentes.push_back(docente);
                 if(this->logRol==0){
                     ct::Teorico* claseTeorico = new ct::Teorico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
+                    claseTeorico->setRutaVideo(NULL);
                     r->getAsignatura()->addClase(claseTeorico);
                     hC->addClase(claseTeorico);
                 }else if(this->logRol==1){
                     cp::Practico* clasePractica = new cp::Practico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
+                    clasePractica->setRutaVideo(NULL);
                     r->getAsignatura()->addClase(clasePractica);
                     hC->addClase(clasePractica);
                 }else if(this->logRol==2){
                     cm::Monitoreo* claseMonitoreo = new cm::Monitoreo(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes,this->habilitados);
+                    claseMonitoreo->setRutaVideo(NULL);                     
                     r->getAsignatura()->addClase(claseMonitoreo);
                     hC->addClase(claseMonitoreo);
                 }
+                cout << "La clase " + this->dtic.getNombre() + " fue creada con exito" << endl;
             }
         }
     }

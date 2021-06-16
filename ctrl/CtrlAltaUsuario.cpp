@@ -5,6 +5,7 @@
 #include "../class/Docente.h"
 #include "../class/Estudiante.h"
 #include "../handler/HandlerUsuario.h"
+#include "../handler/HandlerAsignatura.h"
 
 CtrlAltaUsuario::CtrlAltaUsuario(){}
 
@@ -104,20 +105,46 @@ bool CtrlAltaUsuario::isDocente(){
 void CtrlAltaUsuario::cargarUsuarios(){
 
     HandlerUsuario* hU = HandlerUsuario::getInstancia();
+    HandlerAsignatura* hA = HandlerAsignatura::getInstancia();
+
     Docente* doc1 = new Docente("admin","imgur.com/g2f13a49.png","admin@fing.edu", "admin", "fing");
     Docente* doc2 = new Docente("doc1","imgur.com/g2f13a49.png","doc1@fing.edu", "doc1", "fing");
     Docente* doc3 = new Docente("doc2","imgur.com/g2f13a49.png","doc2@gmail.com", "doc2", "fing");
     Docente* doc4 = new Docente("doc3","imgur.com/g2f13a49.png","doc3@hotmail.com", "doc3", "fing");
     Docente* test = new Docente("test","imgur.com/g2f13a49.png","test", "test", "fing");
-    
-    hU->addUsuario(doc1); hU->addUsuario(doc2); hU->addUsuario(doc3); hU->addUsuario(doc4); hU->addUsuario(test);
+    Docente* test1 = new Docente("test1","imgur.com/g2f13a49.png","test1", "test1", "fing");
+
+    Asignatura* a1 = hA->buscarAsignatura("PP-1");
+    Asignatura* a2 = hA->buscarAsignatura("PA-1");
+    Asignatura* a3 = hA->buscarAsignatura("php-1");
+    Rol* roltest = new Rol(Teorico,a1);
+    Rol* roltest1 = new Rol(Monitoreo,a2);
+    Rol* roltest2 = new Rol(Practico, a3);
+
+    test->addRol(roltest);  test->addRol(roltest1); test->addRol(roltest2);
+    hU->addUsuario(doc1); hU->addUsuario(doc2); hU->addUsuario(doc3); hU->addUsuario(doc4); hU->addUsuario(test); hU->addUsuario(test1);
 
     Estudiante* est = new Estudiante("est","imgur.com/g2f13a49.png","est", "est", "1");
-    Estudiante* est1 = new Estudiante("est1","imgur.com/g2f13a49.png","est1@gmail.com", "est1", "2");
-    Estudiante* est2 = new Estudiante("est2","imgur.com/g2f13a49.png","est2@fing.edu", "est2pass", "3");
-    Estudiante* est3 = new Estudiante("est3","imgur.com/g2f13a49.png","est3@gmail.com", "est3", "4");
+    Estudiante* est1 = new Estudiante("est1","imgur.com/g2f13a49.png","est1", "est", "1");
+    Estudiante* est2 = new Estudiante("est2","imgur.com/g2f13a49.png","est2", "est", "1");
+    Estudiante* est3 = new Estudiante("est3","imgur.com/g2f13a49.png","est3", "est", "1");
+    Estudiante* est4 = new Estudiante("est4","imgur.com/g2f13a49.png","est4", "est", "1");
+    Estudiante* est5 = new Estudiante("est5","imgur.com/g2f13a49.png","est5", "est", "1");
+    Estudiante* est6 = new Estudiante("est6","imgur.com/g2f13a49.png","est6", "est", "1");
+    Estudiante* est7 = new Estudiante("est1","imgur.com/g2f13a49.png","est1@gmail.com", "est1", "2");
+    Estudiante* est8 = new Estudiante("est2","imgur.com/g2f13a49.png","est2@fing.edu", "est2pass", "3");
+    Estudiante* est9 = new Estudiante("est3","imgur.com/g2f13a49.png","est3@gmail.com", "est3", "4");
 
-    hU->addUsuario(est); hU->addUsuario(est1); hU->addUsuario(est2); hU->addUsuario(est3);
+    est->addAsignatura(a1); est->addAsignatura(a2); est->addAsignatura(a3);
+    est1->addAsignatura(a1); est1->addAsignatura(a2); est1->addAsignatura(a3);
+    est2->addAsignatura(a1); est2->addAsignatura(a2); est2->addAsignatura(a3);
+    est3->addAsignatura(a1); est3->addAsignatura(a2); est3->addAsignatura(a3);
+    est4->addAsignatura(a1); est4->addAsignatura(a2); est4->addAsignatura(a3);
+    est5->addAsignatura(a1); est5->addAsignatura(a2); est5->addAsignatura(a3);
+    est6->addAsignatura(a1); est6->addAsignatura(a2); est6->addAsignatura(a3);
+
+    hU->addUsuario(est); hU->addUsuario(est1); hU->addUsuario(est2); hU->addUsuario(est3); hU->addUsuario(est4);
+    hU->addUsuario(est5); hU->addUsuario(est6); hU->addUsuario(est7); hU->addUsuario(est8); hU->addUsuario(est9); 
 }
 
 CtrlAltaUsuario::~CtrlAltaUsuario(){}

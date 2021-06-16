@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <typeinfo>
 #include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
 #include "Fabrica.h"
 #include "dataType/DtDocente.h"
 #include "dataType/DtEstudiante.h"
@@ -47,10 +49,10 @@ void menu(){
 
 int main(){
 	Fabrica* fab = Fabrica::getInstancia();
-	ICtrlAltaUsuario* icau = fab->getICtrlAltaUsuario();
 	ICtrlAltaAsignatura* icaa = fab->getICtrlAltaAsignatura();
-	icau->cargarUsuarios();
+	ICtrlAltaUsuario* icau = fab->getICtrlAltaUsuario();
 	icaa->cargarAsignaturas();
+	icau->cargarUsuarios();
 	int opcion;
 	menu();
 	cin >> opcion;
@@ -310,11 +312,22 @@ void asignacionDocenteAsignatura(){
 			}else{
 				cout<< "No hay docentes para asignar" << endl;
 			}
-			cout<< "\nDesea seguir agregando docentes? (s/n): ";
-			cin >> confirmar;
-			cout <<"\n";
 
-		}while(confirmar!="n");
+			bool salir;
+			do{
+				salir=false;
+				cout<< "\nDesea seguir agregando docentes? (s/n): ";
+				cin >> confirmar;
+				cout <<"\n";
+
+				if(confirmar=="s" || confirmar=="n"){
+					salir=true;
+				}else{
+					cout << "opcion incorrecta, intente de nuevo" << endl;
+				}
+			}while(!salir);
+
+		}while(confirmar=="s");
 
 	}else{
 		cout << "\nNo hay asignaturas para agregarles docentes\n" << endl;
@@ -374,9 +387,20 @@ void inscripcionAsignatura(){
 				}
 			}while(confirmar!="s" && confirmar!="n");
 
-			cout<< "\nDesea seguir inscribiendose a asignaturas? (s/n): ";
-			cin >> confirmar;
-			cout <<"\n";
+			bool salir;
+			do{
+				salir=false;
+				cout<< "\nDesea seguir inscribiendose a asignaturas? (s/n): ";
+				cin >> confirmar;
+				cout <<"\n";
+
+				if(confirmar=="s" || confirmar=="n"){
+					salir=true;
+				}else{
+					cout << "opcion incorrecta, intente de nuevo" << endl;
+				}
+			}while(!salir);
+
 		}
 	}while(confirmar!="n");
 }
@@ -431,9 +455,9 @@ void inicioDeClase(){
 				list<string> inscriptos = icidc->inscriptosAsignatura();
 				bool existeEnLista=false;
 				do{
-					cout << "\n Estudiantes que puede habilitar: " << endl;
+					cout << "\nEstudiantes que puede habilitar: \n" << endl;
 					for(string s: inscriptos){
-						cout << "Estudiante: " + s << endl;
+						cout << "	Estudiante: " + s << endl;
 					}
 					cout << "\nSeleccionar el estudiante que desea habilitar: ";
 					cin >> email;
@@ -463,6 +487,7 @@ void inicioDeClase(){
 						cout << "opcion incorrecta, intente de nuevo" << endl;
 					}
 				}while(!salir);
+
 			}while(habilitados<15 && confirmar!="n");
 			if(habilitados==15){
 				cout << "Ha habilitado el maximo de 15 estudiantes" << endl;
