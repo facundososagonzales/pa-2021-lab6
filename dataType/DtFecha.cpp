@@ -40,6 +40,6 @@ bool operator ==(const DtFecha& f1,const DtFecha& f2){
 }
 
 ostream& operator <<(ostream& salida,const DtFecha& dtf){
-	cout << dtf.dia << "/" << dtf.mes << "/" << dtf.anio <<endl;
+	cout << dtf.dia << "/" << dtf.mes << "/" << dtf.anio;
 	return salida;
 }

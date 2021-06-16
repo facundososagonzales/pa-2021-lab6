@@ -40,8 +40,8 @@ list<string> CtrlAsignacionDocAsignatura::docentesSinAsignar(string asignatura){
         }
     }
     return docentesAsignados;
-
 }
+
 void CtrlAsignacionDocAsignatura::seleccionarDocente(string docente, TipoRol rol){
     this->docente=docente;
     this->rol=rol;

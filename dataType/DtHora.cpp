@@ -20,4 +20,5 @@ int DtHora::getMinuto(){
 int DtHora::getSegundo(){
     return segundo;
 }
+
 DtHora::~DtHora(){}

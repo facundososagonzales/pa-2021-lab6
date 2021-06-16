@@ -88,10 +88,9 @@ DtIniciarClaseFull CtrlInicioDeClase::datosIngresados(){
     HandlerClase* hU = HandlerClase::getInstancia();
     bool existe=true;
     int id;
-    srand((unsigned) time(0));
-
+    srand(time(NULL));
     do{
-        id = 1 + rand();
+        id =(rand() % 5000) + 1;
         if(!hU->existeClase(id)){
             existe=false;
             this->random=id;
@@ -102,7 +101,7 @@ DtIniciarClaseFull CtrlInicioDeClase::datosIngresados(){
     return dticf;
 }
 
-void CtrlInicioDeClase::iniciarClase(){ ///El tipo de la clase se saca del rol del docente
+void CtrlInicioDeClase::iniciarClase(){
     HandlerClase* hC = HandlerClase::getInstancia();
     Sesion* sesion = Sesion::getInstancia();
     HandlerUsuario* hU = HandlerUsuario::getInstancia();
@@ -110,23 +109,23 @@ void CtrlInicioDeClase::iniciarClase(){ ///El tipo de la clase se saca del rol d
     Usuario* usuarioLog = hU->buscarUsuario(sesion->getUsuario());
     Docente* docente = dynamic_cast<Docente*>(usuarioLog);
     if(docente!=NULL){
-        list<Docente*> docentes; docentes.push_back(docente);
-        if(this->logRol==0){
-            ct::Teorico* claseTeorico = new ct::Teorico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
-            for(Rol* r: docente->getRoles()){
-                if(r->getAsignatura()->getCodigo()==dtic.getCodigo()){
+        for(Rol* r: docente->getRoles()){
+            if(r->getAsignatura()->getCodigo()==dtic.getCodigo()){
+                list<Docente*> docentes; docentes.push_back(docente);
+                if(this->logRol==0){
+                    ct::Teorico* claseTeorico = new ct::Teorico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
                     r->getAsignatura()->addClase(claseTeorico);
-                }
-            }
-        }else if(this->logRol==1){
-            cp::Practico* clasePractica = new cp::Practico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
-            for(Rol* r: docente->getRoles()){
-                if(r->getAsignatura()->getCodigo()==dtic.getCodigo()){
+                    hC->addClase(claseTeorico);
+                }else if(this->logRol==1){
+                    cp::Practico* clasePractica = new cp::Practico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
                     r->getAsignatura()->addClase(clasePractica);
+                    hC->addClase(clasePractica);
+                }else if(this->logRol==2){
+                    cm::Monitoreo* claseMonitoreo = new cm::Monitoreo(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes,this->habilitados);
+                    r->getAsignatura()->addClase(claseMonitoreo);
+                    hC->addClase(claseMonitoreo);
                 }
             }
-        }else if(this->logRol==2){
-            cm::Monitoreo* claseMonitoreo = new cm::Monitoreo(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes,this->habilitados);
         }
     }
 }

@@ -5,10 +5,6 @@
 #include <typeinfo>
 #include <stdlib.h>
 #include "Fabrica.h"
-#include "interface/ICtrlAltaUsuario.h"
-#include "interface/ICtrlAltaAsignatura.h"
-#include "interface/ICtrlAsignacionDocAsignatura.h"
-#include "interface/ICtrlInscripcionAsignatura.h"
 #include "dataType/DtDocente.h"
 #include "dataType/DtEstudiante.h"
 #include "dataType/DtAsignatura.h"
@@ -40,8 +36,9 @@ void menu(){
 		cout <<"__________4. Agregar Doc a asignatura_______"<<endl;
 		if(icau->isLogged() && !icau->isDocente()){
 			cout <<"__________5. Inscripcion a asignatura_______"<<endl;
+		}else if(icau->isLogged() && icau->isDocente()){
+			cout <<"__________5. Iniciar Clase__________________"<<endl;
 		}
-		cout <<"__________6. Eliminar Arribos_______________"<<endl;
 		cout <<"__________7. Listar Barcos__________________"<<endl;
 		cout <<"__________8. Salir__________________________"<<endl;
 		cout <<"____________________________________________"<<endl;
@@ -243,7 +240,7 @@ void asignacionDocenteAsignatura(){
 				cout << "Asignatura: " + s << endl;
 			}
 			cout << "\nSeleccionar asignatura para asignarle docente: ";
-			cin >> codigo; cout << codigo;
+			cin >> codigo;
 			cout << "\n";
 
 			for(string s: asignaturas){
@@ -386,4 +383,114 @@ void inscripcionAsignatura(){
 
 ////////////////////////////////////////////> Operaciones F <//////////////////////////////////////////////////
 
-void inicioDeClase(){}
+void inicioDeClase(){
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"________________Iniciar Clase________________"<< endl;
+	cout <<"_____________________________________________\n" <<endl;
+
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlInicioDeClase* icidc = fab->getICtrlInicioDeClase();
+	list<string> asignaturas = icidc->asignaturasAsignadas();
+	string codigo, nombre, email,confirmar;
+	bool salir;
+		
+	if(!asignaturas.empty()){
+		bool existeEnLista=false;
+
+		do{
+			for(string s: asignaturas){
+				cout << "Asignatura: " + s << endl;
+			}
+			cout << "\nSeleccionar la asignatura de la cual quiere iniciar clase: ";
+			cin >> codigo;
+			cout << "\n";
+
+			for(string s: asignaturas){
+				if(s==codigo){
+					existeEnLista=true;
+				}
+			}
+			if(!existeEnLista){
+				cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
+			}
+
+		}while(!existeEnLista);
+
+		cout << "Ingrese el nombre de la clase: ";
+		cin >> nombre;
+		time_t fecha = time(0); tm* now = localtime(&fecha);
+		DtFecha dtf = DtFecha(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
+		DtHora dth = DtHora(dtf,now->tm_hour,now->tm_min,now->tm_sec);
+		DtIniciarClase dtic = DtIniciarClase(codigo,nombre,dth);
+		
+		bool monitoreo = icidc->seleccionarAsignatura(dtic);
+		int habilitados=0;
+		if(monitoreo){
+			do{
+				list<string> inscriptos = icidc->inscriptosAsignatura();
+				bool existeEnLista=false;
+				do{
+					cout << "\n Estudiantes que puede habilitar: " << endl;
+					for(string s: inscriptos){
+						cout << "Estudiante: " + s << endl;
+					}
+					cout << "\nSeleccionar el estudiante que desea habilitar: ";
+					cin >> email;
+					cout << "\n";
+
+					for(string s: inscriptos){
+						if(s==email){
+							existeEnLista=true;
+						}
+					}
+					if(!existeEnLista){
+						cout << "Error al ingresar el estudiante, intente de nuevo\n" << endl;
+					}
+				}while(!existeEnLista);
+				icidc->habilitarEstudiante(email);
+				habilitados++;
+
+				do{
+					salir=false;
+					cout<< "Desea seguir habilitando estudiantes? (s/n): ";
+					cin >> confirmar;
+					cout <<"\n";
+
+					if(confirmar=="s" || confirmar=="n"){
+						salir=true;
+					}else{
+						cout << "opcion incorrecta, intente de nuevo" << endl;
+					}
+				}while(!salir);
+			}while(habilitados<15 && confirmar!="n");
+			if(habilitados==15){
+				cout << "Ha habilitado el maximo de 15 estudiantes" << endl;
+			}
+		}
+		DtIniciarClaseFull dticf = icidc->datosIngresados(); // preguntar por cuales datos hay que mostrar y si la fecha es la del sistema
+		cout << "id: " << dticf.getId() << endl;
+		cout << "nombre: " + dticf.getNombre() << endl;
+		cout << "Fecha de inicio: " << dticf.getFechaHora().getFecha() <<  " - " << dticf.getFechaHora().getHora() << ":"
+			 << dticf.getFechaHora().getMinuto() << ":" << dticf.getFechaHora().getSegundo() << endl;
+
+		do{
+			salir=false;
+			cout<< "\nDesea iniciar la clase? (s/n): ";
+			cin >> confirmar;
+			cout <<"\n";
+
+			if(confirmar=="s" || confirmar=="n"){
+				salir=true;
+			}else{
+				cout << "opcion incorrecta, intente de nuevo" << endl;
+			}
+		}while(!salir);
+
+		if(confirmar=="s"){
+			icidc->iniciarClase();
+		}
+	}else{
+		cout << "No se tiene ninguna asignatura asignada\n" << endl;
+	}
+}
