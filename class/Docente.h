@@ -5,7 +5,7 @@
 #include "../class/Usuario.h"
 #include "../class/Rol.h"
 
-class Rol;
+class Rol; class Asignatura;
 
 class Docente : public Usuario{
 private:
@@ -20,6 +20,10 @@ public:
 
     void addRol(Rol*);
     list<Rol*> getRoles();
+
+    void setRoles(list<Rol*>);
+
+    void eliminarRol(Asignatura*);
 
     ~Docente();
 };

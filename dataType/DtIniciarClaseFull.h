@@ -12,7 +12,7 @@ class DtIniciarClaseFull : public DtIniciarClase{
         DtIniciarClaseFull();
         DtIniciarClaseFull(string,string,DtHora,int);
         int getId();
-        ~DtIniciarClaseFull();
+        virtual~DtIniciarClaseFull();
 };
 
 #endif

@@ -22,3 +22,5 @@ Asignatura* Rol::getAsignatura() {
 void Rol::setAsignatura(Asignatura* asignatura) {
     this->asignatura=asignatura;
 }
+
+Rol::~Rol() {}

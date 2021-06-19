@@ -22,4 +22,18 @@ list<Asignatura*> Estudiante::getAsignaturas() {
     return this->asignaturas;
 }
 
+void Estudiante::setAsignaturas(list<Asignatura*> asig) {
+    this->asignaturas = asig;
+}
+
+void Estudiante::eliminarInscripcion(Asignatura* asig) {
+    Asignatura* a;
+    for (list<Asignatura*>::iterator it = this->asignaturas.begin(); it != this->asignaturas.end(); ++it) {
+        if ((*it)->getCodigo() == asig->getCodigo()) {
+            a = *it;
+        }
+    }
+    this->asignaturas.remove(a);
+}
+
 Estudiante::~Estudiante(){}

@@ -21,6 +21,10 @@ public:
     void addAsignatura(Asignatura*);
     list<Asignatura*> getAsignaturas();
 
+    void setAsignaturas(list<Asignatura*>);
+
+    void eliminarInscripcion(Asignatura*);
+
     ~Estudiante();
 };
 

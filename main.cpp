@@ -19,6 +19,7 @@ void altaAsignatura();
 void asignacionDocenteAsignatura();
 void inscripcionAsignatura();
 void inicioDeClase();
+void eliminarAsignatura();
 
 void menu(){
 		Fabrica* fab = Fabrica::getInstancia();
@@ -41,7 +42,7 @@ void menu(){
 		}else if(icau->isLogged() && icau->isDocente()){
 			cout <<"__________5. Iniciar Clase__________________"<<endl;
 		}
-		cout <<"__________7. Listar Barcos__________________"<<endl;
+		cout <<"__________7. Eliminar Asignatura____________"<<endl;
 		cout <<"__________8. Salir__________________________"<<endl;
 		cout <<"____________________________________________"<<endl;
 		cout <<"OPCION: ";
@@ -68,6 +69,8 @@ int main(){
 
 			case 5: if(icau->isLogged() && !icau->isDocente()){ inscripcionAsignatura();      
 					}else if(icau->isLogged()){ inicioDeClase();}         break;
+
+			case 7: eliminarAsignatura(); 						  break;
 			
 			default:
 				cout << "OPCIÓN INCORRECTA" << endl;
@@ -407,6 +410,7 @@ void inscripcionAsignatura(){
 
 ////////////////////////////////////////////> Operaciones F <//////////////////////////////////////////////////
 
+
 void inicioDeClase(){
 	system("clear");
 	cout <<"_____________________________________________" <<endl;
@@ -493,11 +497,18 @@ void inicioDeClase(){
 				cout << "Ha habilitado el maximo de 15 estudiantes" << endl;
 			}
 		}
-		DtIniciarClaseFull dticf = icidc->datosIngresados(); // preguntar por cuales datos hay que mostrar y si la fecha es la del sistema
-		cout << "id: " << dticf.getId() << endl;
-		cout << "nombre: " + dticf.getNombre() << endl;
-		cout << "Fecha de inicio: " << dticf.getFechaHora().getFecha() <<  " - " << dticf.getFechaHora().getHora() << ":"
-			 << dticf.getFechaHora().getMinuto() << ":" << dticf.getFechaHora().getSegundo() << endl;
+		DtIniciarClaseFull* dticf = icidc->datosIngresados(); // preguntar por cuales datos hay que mostrar y si la fecha es la del sistema
+		cout << "id: " << dticf->getId() << endl;
+		cout << "nombre: " + dticf->getNombre() << endl;
+		cout << "Fecha de inicio: " << dticf->getFechaHora().getFecha() <<  " - " << dticf->getFechaHora().getHora() << ":"
+			 << dticf->getFechaHora().getMinuto() << ":" << dticf->getFechaHora().getSegundo() << endl;
+		DtIniciarMonitoreo* dtim = dynamic_cast<DtIniciarMonitoreo*>(dticf);
+		if(dtim!=NULL){
+			cout << "Habilitados: \n";
+			for(string s: dtim->getHabilitados()){
+				cout << "	Estudiante: " + s << endl;
+			}
+		}
 
 		do{
 			salir=false;
@@ -511,11 +522,72 @@ void inicioDeClase(){
 				cout << "opcion incorrecta, intente de nuevo" << endl;
 			}
 		}while(!salir);
-
+		
 		if(confirmar=="s"){
 			icidc->iniciarClase();
 		}
 	}else{
 		cout << "No se tiene ninguna asignatura asignada\n" << endl;
+	}
+}
+
+////////////////////////////////////////////> Operaciones G <//////////////////////////////////////////////////
+
+void eliminarAsignatura() {
+	system("clear");
+	cout << "_____________________________________________" << endl;
+	cout << "_____________Eliminar Asignatura_____________" << endl;
+	cout << "_____________________________________________\n" << endl;
+
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlEliminarAsignatura* icea = fab->getICtrlEliminarAsignatura();
+	list<string> asignaturas = icea->listarAsignaturas();
+	
+	string codigo;
+	if (!asignaturas.empty()) {
+		bool existeEnLista = false;
+		do {
+			for (string s : asignaturas) {
+				cout << "Asignatura: " + s << endl;
+			}
+			cout << "\nSeleccionar la asignatura de la cual quiere eliminar: ";
+			cin >> codigo;
+			cout << "\n";
+
+			for (string s : asignaturas) {
+				if (s == codigo) {
+					existeEnLista = true;
+				}
+			}
+			if (!existeEnLista) {
+				cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
+			}
+
+		} while (!existeEnLista);
+
+
+		icea->seleccionarAsignatura(codigo);
+		bool salir;
+		string confirmar;
+		do {
+			salir = false;
+			cout << "Desea eliminar la asignatura? (s/n): ";
+			cin >> confirmar;
+			cout << "\n";
+
+			if (confirmar == "s" || confirmar == "n") {
+				salir = true;
+			}
+			else {
+				cout << "opcion incorrecta, intente de nuevo" << endl;
+			}
+		} while (!salir);
+
+		if (confirmar == "s") {
+			icea->eliminarAsignatura();
+		}
+	}
+	else {
+		cout << "\nNo existen asignaturas en el sistema" << endl;
 	}
 }

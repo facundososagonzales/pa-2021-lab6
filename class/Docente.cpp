@@ -22,4 +22,19 @@ list<Rol*> Docente::getRoles() {
     return this->roles;
 }
 
+void Docente::setRoles(list<Rol*> roles) {
+    this->roles = roles;
+}
+
+void Docente::eliminarRol(Asignatura* asig) {
+    Rol* r;
+    for (list<Rol*>::iterator it = this->roles.begin(); it != this->roles.end(); ++it) {
+        if ((*it)->getAsignatura()->getCodigo() == asig->getCodigo()) {
+            r = *it;
+        }
+    }
+    this->roles.remove(r);
+    //delete(r);
+}
+
 Docente::~Docente(){}

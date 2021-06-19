@@ -6,6 +6,8 @@
 #include "interface/ICtrlAsignacionDocAsignatura.h"
 #include "interface/ICtrlInscripcionAsignatura.h"
 #include "interface/ICtrlInicioDeClase.h"
+#include "interface/ICtrlEliminarAsignatura.h"
+#include "interface/ICtrlAsisteEnVivo.h"
 
 class Fabrica{
     private:
@@ -18,6 +20,8 @@ class Fabrica{
         static ICtrlAsignacionDocAsignatura* getICtrlAsignacionDocAsignatura();
         static ICtrlInscripcionAsignatura* getICtrlInscripcionAsignatura();
         static ICtrlInicioDeClase* getICtrlInicioDeClase();
+        static ICtrlEliminarAsignatura* getICtrlEliminarAsignatura();
+       // static ICtrlAsisteEnVivo* getICtrlAsisteEnVivo();
         
         ~Fabrica();
         

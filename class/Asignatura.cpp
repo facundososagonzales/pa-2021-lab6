@@ -38,3 +38,5 @@ list<Clase*> Asignatura::getClases() {
 void Asignatura::addClase(Clase* clase) {
     this->clases.push_back (clase);
 }
+
+Asignatura::~Asignatura() {}

@@ -4,6 +4,8 @@
 #include "ctrl/CtrlAsignacionDocAsignatura.h"
 #include "ctrl/CtrlInscripcionAsignatura.h"
 #include "ctrl/CtrlInicioDeClase.h"
+#include "ctrl/CtrlEliminarAsignatura.h"
+#include "ctrl/CtrlAsisteEnVivo.h"
 
 Fabrica* Fabrica::instancia = NULL;
 
@@ -34,3 +36,11 @@ ICtrlInscripcionAsignatura* Fabrica::getICtrlInscripcionAsignatura(){
 ICtrlInicioDeClase* Fabrica::getICtrlInicioDeClase(){
     return new CtrlInicioDeClase();
 }
+
+ICtrlEliminarAsignatura* Fabrica::getICtrlEliminarAsignatura() {
+    return new CtrlEliminarAsignatura();
+}
+/*
+ICtrlAsisteEnVivo* Fabrica::getICtrlAsisteEnVivo() {
+    return new CtrlAsisteEnVivo();
+}*/

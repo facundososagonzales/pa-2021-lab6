@@ -84,7 +84,7 @@ void CtrlInicioDeClase::habilitarEstudiante(string email){
         this->habilitados.push_back(estudiante);
 }
 
-DtIniciarClaseFull CtrlInicioDeClase::datosIngresados(){
+DtIniciarClaseFull* CtrlInicioDeClase::datosIngresados(){
     HandlerClase* hU = HandlerClase::getInstancia();
     bool existe=true;
     int id;
@@ -97,8 +97,17 @@ DtIniciarClaseFull CtrlInicioDeClase::datosIngresados(){
         }
     }while(existe);
 
-    DtIniciarClaseFull dticf = DtIniciarClaseFull(dtic.getCodigo(),dtic.getNombre(),dtic.getFechaHora(),this->random);
-    return dticf;
+    if(this->habilitados.empty()){
+        DtIniciarClaseFull* dticf = new DtIniciarClaseFull(dtic.getCodigo(),dtic.getNombre(),dtic.getFechaHora(),this->random);
+        return dticf;
+    }else{
+        list<string> estudiantes;
+        for(Estudiante* e: this->habilitados){
+            estudiantes.push_back(e->getemail());
+        }
+        DtIniciarMonitoreo* dtim = new DtIniciarMonitoreo(dtic.getCodigo(),dtic.getNombre(),dtic.getFechaHora(),this->random, estudiantes);
+        return dtim;
+    }
 }
 
 void CtrlInicioDeClase::iniciarClase(){
@@ -114,17 +123,17 @@ void CtrlInicioDeClase::iniciarClase(){
                 list<Docente*> docentes; docentes.push_back(docente);
                 if(this->logRol==0){
                     ct::Teorico* claseTeorico = new ct::Teorico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
-                    claseTeorico->setRutaVideo(NULL);
+                    claseTeorico->setRutaVideo("PENDIENTE");
                     r->getAsignatura()->addClase(claseTeorico);
                     hC->addClase(claseTeorico);
                 }else if(this->logRol==1){
                     cp::Practico* clasePractica = new cp::Practico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
-                    clasePractica->setRutaVideo(NULL);
+                    clasePractica->setRutaVideo("PENDIENTE");
                     r->getAsignatura()->addClase(clasePractica);
                     hC->addClase(clasePractica);
                 }else if(this->logRol==2){
                     cm::Monitoreo* claseMonitoreo = new cm::Monitoreo(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes,this->habilitados);
-                    claseMonitoreo->setRutaVideo(NULL);                     
+                    claseMonitoreo->setRutaVideo("PENDIENTE");                     
                     r->getAsignatura()->addClase(claseMonitoreo);
                     hC->addClase(claseMonitoreo);
                 }

@@ -21,7 +21,7 @@ public:
     bool seleccionarAsignatura(DtIniciarClase inicioClase);
     list<string> inscriptosAsignatura();
     void habilitarEstudiante(string);
-    DtIniciarClaseFull datosIngresados();
+    DtIniciarClaseFull* datosIngresados();
     void iniciarClase();
     void cargarClases();
     ~CtrlInicioDeClase();
