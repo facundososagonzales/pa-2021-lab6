@@ -93,4 +93,43 @@ Clase::Clase(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo,
         return this->asistenciasDiferidos;
     }
 
+    bool Clase::existeEstudianteEnClase(string email){
+        bool flag=false;
+        for(AsisteEnVivo* a : this->getAsistenciasEnVivo()){
+            if(a->getEstudiante()->getemail()==email){
+                flag=true;
+            }
+        }
+    return flag;
+    }
+
+    bool Clase::existeEstudianteEnClase(string email){
+        bool flag=false;
+        for(Docente* d : this->docentes){
+            if(d->getemail()==email){
+                flag=true;
+            }
+        }
+    return flag;
+    }
+
+    list<DtParticipacion*> Clase::getDtParticipaciones(){
+        list<DtParticipacion*> dtPs;
+        for(Participacion* p : this->participaciones){            
+            DtParticipacion* dtPart = p->getDtParticipacionPuntero();
+            dtPs.push_back(dtPart);
+        }
+        return dtPs;
+    }
+
+    Participacion* Clase::buscarParticipacion(int idP){
+        Participacion* part = NULL;
+        for(Participacion* p : this->participaciones){
+            if(p->getId()==idP){
+                part = p;
+            }
+        }
+        return part;
+    }
+
     Clase::~Clase(){};

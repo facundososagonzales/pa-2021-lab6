@@ -2,6 +2,7 @@
 #define PARTICIPACION
 
 #include "../dataType/DtHora.h"
+#include "../dataType/DtParticipacion.h"
 #include "../class/Usuario.h"
 
 class Participacion{
@@ -25,6 +26,7 @@ public:
 
     void setRespuestaA(Participacion*);
     Participacion* getRespuestaA();
+    DtParticipacion* getDtParticipacionPuntero();
 
     ~Participacion();
 };

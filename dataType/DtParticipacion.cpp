@@ -1,6 +1,7 @@
 #include "DtParticipacion.h"
 
 DtParticipacion::DtParticipacion(){}
+
 DtParticipacion::DtParticipacion(int id,DtHora fecha,string mensaje,DtParticipacion* responde){
 	this->id=id;
     this->fecha=fecha;

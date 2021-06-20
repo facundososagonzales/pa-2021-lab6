@@ -6,6 +6,7 @@
 #include "../class/Participacion.h"
 #include "../class/AsisteDiferido.h"
 #include "../class/AsisteEnVivo.h"
+#include "../dataType/DtParticipacion.h"
 
 class Docente;
 class Participacion;
@@ -54,6 +55,11 @@ public:
 
     void addAsisteDiferido(AsisteDiferido*);
     list<AsisteDiferido*> getAsistenciasDiferido();
+
+    bool existeEstudianteEnClase(string);
+    bool existeDocenteEnClase(string);
+    list<DtParticipacion*> getDtParticipaciones();
+    Participacion* buscarParticipacion(int);
 
     ~Clase();
 };

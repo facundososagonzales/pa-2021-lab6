@@ -39,3 +39,15 @@ Participacion* Participacion::getRespuestaA() {
 void Participacion::setRespuestaA(Participacion* respuestaA) {
     this->respuestaA=respuestaA;
 }
+
+DtParticipacion* Participacion::getDtParticipacionPuntero(){
+    DtParticipacion* dtP;
+    if(this->respuestaA==NULL){
+        dtP = new DtParticipacion(this->id,this->hora,this->mensaje,NULL);
+    }else{
+        dtP = new DtParticipacion(this->id,this->hora,this->mensaje,this->respuestaA->getDtParticipacionPuntero());
+    }
+    return dtP;
+}
+
+Participacion::~Participacion(){}
