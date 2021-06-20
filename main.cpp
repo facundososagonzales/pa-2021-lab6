@@ -10,6 +10,7 @@
 #include "dataType/DtDocente.h"
 #include "dataType/DtEstudiante.h"
 #include "dataType/DtAsignatura.h"
+#include "dataType/DtParticipacion.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ void asignacionDocenteAsignatura();
 void inscripcionAsignatura();
 void inicioDeClase();
 void eliminarAsignatura();
+void envioMensaje();
 
 void menu(){
 		Fabrica* fab = Fabrica::getInstancia();
@@ -42,6 +44,9 @@ void menu(){
 		}else if(icau->isLogged() && icau->isDocente()){
 			cout <<"__________5. Iniciar Clase__________________"<<endl;
 		}
+		if(icau->isLogged()){
+			cout <<"__________6. Envio Mensaje_________________"<<endl;
+		}		
 		cout <<"__________7. Eliminar Asignatura____________"<<endl;
 		cout <<"__________8. Salir__________________________"<<endl;
 		cout <<"____________________________________________"<<endl;
@@ -67,10 +72,12 @@ int main(){
 
 			case 4: asignacionDocenteAsignatura(); 						  break;
 
-			case 5: if(icau->isLogged() && !icau->isDocente()){ inscripcionAsignatura();      
+			case 5: if(icau->isLogged() && !icau->isDocente()){inscripcionAsignatura();      
 					}else if(icau->isLogged()){ inicioDeClase();}         break;
 
-			case 7: eliminarAsignatura(); 						  break;
+			case 6: if(icau->isLogged()){envioMensaje();}		   	  	  break;
+			
+			case 7: eliminarAsignatura(); 						          break;
 			
 			default:
 				cout << "OPCIÓN INCORRECTA" << endl;
@@ -589,5 +596,95 @@ void eliminarAsignatura() {
 	}
 	else {
 		cout << "\nNo existen asignaturas en el sistema" << endl;
+	}
+}
+
+////////////////////////////////////////////> Operaciones H <//////////////////////////////////////////////////
+
+void envioMensaje() {
+	system("clear");
+	cout << "_____________________________________________" << endl;
+	cout << "_____________Envio Mensaje_____________" << endl;
+	cout << "_____________________________________________\n" << endl;
+
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlEnvioMensaje* icem = fab->getICtrlEnvioMensaje();
+	list<int> clases = icem->claseOnlineAsistiendo();
+
+	int id;
+	if(!clases.empty()){
+		bool existeEnLista=false;
+
+		do{
+			for(int c: clases){
+				cout << "Clase: " << c << endl;
+			}
+			cout << "\nSeleccionar la clase a la cual esta participando y quiere mandar un mensaje: ";
+			cin >> id;
+			cout << "\n";
+
+			for(int c: clases){
+				if(c==id){
+					existeEnLista=true;
+				}
+			}
+			if(!existeEnLista){
+				cout << "Error al ingresar clase, intente de nuevo.\n" << endl;
+			}
+
+		}while(!existeEnLista);
+
+		list<DtParticipacion*> dtPs = icem->seleccionarClase(id);
+		for(DtParticipacion* dtP : dtPs){
+			dtP->imprimirParticipacion();		
+		}
+		
+		bool salir;
+		string confirmar;
+		do {
+			salir = false;
+			cout << "\nEl mensaje enviado es respuesta de otro mensaje? (s/n): " ;
+			cin >> confirmar;
+			cout << "\n";
+
+			if (confirmar == "s" || confirmar == "n") {
+				salir = true;
+			}
+			else {
+				cout << "opcion incorrecta, intente de nuevo" << endl;
+			}
+		} while (!salir);
+
+		if (confirmar == "s") {
+			int idR;
+			cout << "\nIngrese el id del mensaje a responder: " ;
+			cin >> idR;
+			icem->responder(idR);			
+		}
+
+		string texto;
+		cout << "\nIngrese el texto del mensaje: " ;
+		cin >> texto;
+		icem->ingresarTexto(texto);
+
+		do {
+			salir = false;
+			cout << "\nDesea enviar el mensaje? (s/n): " ;
+			cin >> confirmar;
+			cout << "\n";
+
+			if (confirmar == "s" || confirmar == "n") {
+				salir = true;
+			}
+			else {
+				cout << "opcion incorrecta, intente de nuevo" << endl;
+			}
+		} while (!salir);
+
+		if (confirmar == "s") {
+			icem->enviarMensaje();
+		}
+	}else{
+		cout << "No se encuentra participando en ninguna clase en vivo.\n" << endl;
 	}
 }

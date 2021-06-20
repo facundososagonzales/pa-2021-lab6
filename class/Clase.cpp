@@ -103,7 +103,7 @@ Clase::Clase(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo,
     return flag;
     }
 
-    bool Clase::existeEstudianteEnClase(string email){
+    bool Clase::existeDocenteEnClase(string email){
         bool flag=false;
         for(Docente* d : this->docentes){
             if(d->getemail()==email){

@@ -6,6 +6,7 @@
 #include "ctrl/CtrlInicioDeClase.h"
 #include "ctrl/CtrlEliminarAsignatura.h"
 #include "ctrl/CtrlAsisteEnVivo.h"
+#include "ctrl/CtrlEnvioMensaje.h"
 
 Fabrica* Fabrica::instancia = NULL;
 
@@ -40,6 +41,11 @@ ICtrlInicioDeClase* Fabrica::getICtrlInicioDeClase(){
 ICtrlEliminarAsignatura* Fabrica::getICtrlEliminarAsignatura() {
     return new CtrlEliminarAsignatura();
 }
+
+ICtrlEnvioMensaje* Fabrica::getICtrlEnvioMensaje() {
+    return new CtrlEnvioMensaje();
+}
+
 /*
 ICtrlAsisteEnVivo* Fabrica::getICtrlAsisteEnVivo() {
     return new CtrlAsisteEnVivo();

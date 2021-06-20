@@ -21,4 +21,22 @@ string DtParticipacion::getMensaje(){
 DtParticipacion* DtParticipacion::getResponde(){
     return responde;
 }
+
+void DtParticipacion::imprimirParticipacion(){
+    if(this->responde==NULL){
+        cout << "|->Id: " << this->id << " - Mensaje: " << this->mensaje << endl;
+    }else{        
+        imprimirParticipacion(this->responde,this->id);
+    }
+}
+
+void DtParticipacion::imprimirParticipacion(DtParticipacion* participacion, int id){
+    if(participacion->responde==NULL){
+        cout << "|<-Id: " << participacion->id << " - IdR: " << id <<" - Mensaje: " << participacion->mensaje << endl;
+    }else{
+        cout << "|<-Id: " << participacion->id << " - IdR: " << id <<" - Mensaje: " << participacion->mensaje << endl;
+        imprimirParticipacion(participacion->responde,participacion->id);
+    }
+}
+
 DtParticipacion::~DtParticipacion(){}

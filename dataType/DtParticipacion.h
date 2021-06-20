@@ -19,6 +19,8 @@ class DtParticipacion{
         DtHora getFecha();
         string getMensaje();
         DtParticipacion* getResponde();
+        void imprimirParticipacion();
+        void imprimirParticipacion(DtParticipacion*,int);
         ~DtParticipacion();
 };
 
