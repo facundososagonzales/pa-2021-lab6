@@ -5,6 +5,8 @@
 #include<list>
 #include "../class/Clase.h"
 #include "../dataType/DtInstanciaClase.h"
+#include "../dataType/DtInfoTeorico.h"
+#include "../dataType/DtInfoMonitoreo.h"
 
 using namespace std;
 
@@ -31,8 +33,9 @@ public:
 
     void addClase(Clase*);
     list<Clase*> getClases();
-    
+
     list<int> getClasesOnline();
+    list<DtInfoClase*> getInfoClases();
 
 
 

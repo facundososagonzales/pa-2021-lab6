@@ -24,6 +24,7 @@ public:
     void setRoles(list<Rol*>);
 
     void eliminarRol(Asignatura*);
+    list<string> getAsignaturasAsignadas();
 
     ~Docente();
 };

@@ -37,4 +37,14 @@ void Docente::eliminarRol(Asignatura* asig) {
     //delete(r);
 }
 
+list<string> Docente::getAsignaturasAsignadas(){
+    list<string> asignaturasAsignadas;
+    if(!this->getRoles().empty()){
+        for(Rol* r: this->getRoles()){
+            asignaturasAsignadas.push_back(r->getAsignatura()->getCodigo());
+        }
+    }
+    return asignaturasAsignadas;
+}
+
 Docente::~Docente(){}

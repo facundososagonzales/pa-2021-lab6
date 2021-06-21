@@ -141,4 +141,20 @@ Clase::Clase(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo,
         this->asistenciasEnvivo.push_back(asisteEnVivo);
     }
 
+    list<string> Clase::getEmailDocentes(){
+        list<string> emailDocentes;
+        for(Docente* d : this->docentes){
+            emailDocentes.push_back(d->getemail());
+        }
+        return emailDocentes;
+    }
+
+    list<string> Clase::getEmailEstudiantes(){
+        list<string> emailEstudiantes;
+        for(AsisteEnVivo* a : this->asistenciasEnvivo){            
+            emailEstudiantes.push_back(a->getEstudiante()->getemail());
+        }
+        return emailEstudiantes;
+    }
+
     Clase::~Clase(){};

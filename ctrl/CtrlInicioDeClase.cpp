@@ -21,11 +21,7 @@ list<string> CtrlInicioDeClase::asignaturasAsignadas(){
     Usuario* usuarioLog = hU->buscarUsuario(sesion->getUsuario());
     Docente* docente = dynamic_cast<Docente*>(usuarioLog);
     if(docente!=NULL){
-        if(!docente->getRoles().empty()){
-            for(Rol* r: docente->getRoles()){
-                asignaturasAsignadas.push_back(r->getAsignatura()->getCodigo());
-            }
-        }
+        asignaturasAsignadas = docente->getAsignaturasAsignadas();  
     }
     return asignaturasAsignadas;
 }
@@ -124,6 +120,7 @@ void CtrlInicioDeClase::iniciarClase(){
                 if(this->logRol==0){
                     ct::Teorico* claseTeorico = new ct::Teorico(this->random,dtic.getNombre(),dtic.getFechaHora(),docentes);
                     claseTeorico->setRutaVideo("PENDIENTE");
+                    claseTeorico->setCantAsiste(0);
                     r->getAsignatura()->addClase(claseTeorico);
                     hC->addClase(claseTeorico);
                 }else if(this->logRol==1){

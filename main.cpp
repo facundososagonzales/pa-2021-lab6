@@ -23,6 +23,7 @@ void inicioDeClase();
 void eliminarAsignatura();
 void envioMensaje();
 void asisteEnVivo();
+void listadoDeClases();
 
 void menu(){
 		Fabrica* fab = Fabrica::getInstancia();
@@ -49,7 +50,11 @@ void menu(){
 			cout <<"__________6. Envio Mensaje_________________"<<endl;
 		}		
 		cout <<"__________7. Eliminar Asignatura____________"<<endl;
-		cout <<"__________8. Asiste en Vivo_________________"<<endl;
+		if(icau->isLogged() && !icau->isDocente()){
+			cout <<"__________8. Asiste en Vivo_________________"<<endl;
+		}else if(icau->isLogged() && icau->isDocente()){
+			cout <<"__________8. Listado de Clases______________"<<endl;
+		}
 		cout <<"__________9. Salir__________________________"<<endl;
 		cout <<"____________________________________________"<<endl;
 		cout <<"OPCION: ";
@@ -81,7 +86,8 @@ int main(){
 			
 			case 7: eliminarAsignatura(); 						          break;
 
-			case 8: asisteEnVivo(); 							          break;
+			case 8: if(icau->isLogged() && !icau->isDocente()){asisteEnVivo();
+					}else if(icau->isLogged()){ listadoDeClases();}       break;	
 			
 			default:
 				cout << "OPCIÓN INCORRECTA" << endl;
@@ -778,5 +784,60 @@ void asisteEnVivo(){
 		}
 	}else{
 		cout << "\nNo existen asignaturas a las cuales este inscripto" << endl;
+	}
+}
+
+////////////////////////////////////////////> Operaciones J <//////////////////////////////////////////////////
+
+void listadoDeClases(){
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"________________Listado de Clases____________"<< endl;
+	cout <<"_____________________________________________\n" <<endl;
+
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlListadoDeClases* iclc = fab->getICtrlListadoDeClases();
+	list<string> asignaturas = iclc->asignaturasAsignadas();
+	string codigo;
+	bool salir;
+		
+	if(!asignaturas.empty()){
+		bool existeEnLista=false;
+
+		do{
+			for(string s: asignaturas){
+				cout << "Asignatura: " + s << endl;
+			}
+			cout << "\nSeleccionar la asignatura de la cual quiere listar las clases: ";
+			cin >> codigo;
+			cout << "\n";
+
+			for(string s: asignaturas){
+				if(s==codigo){
+					existeEnLista=true;
+				}
+			}
+			if(!existeEnLista){
+				cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
+			}
+
+		}while(!existeEnLista);
+
+		list<DtInfoClase*> dtInfoClases = iclc->seleccionarAsignatura(codigo);
+		for(DtInfoClase* dti : dtInfoClases){
+			cout << "Id: " << dti->getId() << " - Nombre: " << dti->getNombre() << endl;
+			cout << "Docentes: ";
+			int size = 0;
+			for(string s : dti->getDocentes()){
+				if(dti->getDocentes().size()<size){
+					cout << s << ", ";
+				}else{
+					cout << s << endl;
+				}				
+			}
+		}
+
+	}else{
+		cout << "No se tiene ninguna asignatura asignada\n" << endl;
 	}
 }

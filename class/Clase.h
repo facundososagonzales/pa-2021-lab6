@@ -61,8 +61,10 @@ public:
     list<DtParticipacion*> getDtParticipaciones();
     Participacion* buscarParticipacion(int);
     void agregarAsistenciaOnline(Estudiante*);
+    list<string> getEmailDocentes();
+    list<string> getEmailEstudiantes();
 
-    ~Clase();
+    virtual ~Clase();
 };
 
 #endif

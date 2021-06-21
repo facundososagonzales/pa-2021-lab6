@@ -1,4 +1,7 @@
 #include "../class/Asignatura.h"
+#include "../class/Teorico.h"
+#include "../class/Monitoreo.h"
+#include "../class/Practico.h"
 
 Asignatura::Asignatura(){}
 
@@ -47,6 +50,34 @@ list<int> Asignatura::getClasesOnline(){
         } 
     }
     return idClases;
+}
+
+list<DtInfoClase*> Asignatura::getInfoClases(){
+    list<DtInfoClase*> dtInfoClases;
+    for(Clase* c : this->clases){
+        ct::Teorico* claseTeorico = dynamic_cast<ct::Teorico*>(c);
+        if(claseTeorico!=NULL){
+            DtInfoTeorico* dtInfoTeorico = new DtInfoTeorico(claseTeorico->getId(), 
+            claseTeorico->getNombre(), claseTeorico->getEmailDocentes(), 
+            claseTeorico->getCantAsiste());
+            dtInfoClases.push_back(dtInfoTeorico);
+        }else{
+            cm::Monitoreo* claseMonitoreo = dynamic_cast<cm::Monitoreo*>(c);
+            if(claseMonitoreo!=NULL){
+                DtInfoMonitoreo* dtInfoMonitoreo = new DtInfoMonitoreo(claseMonitoreo->getId(), 
+                claseMonitoreo->getNombre(), claseMonitoreo->getEmailDocentes(),claseMonitoreo->getEmailEstudiantes());
+                dtInfoClases.push_back(dtInfoMonitoreo);
+            }else{
+                cp::Practico* clasePractico = dynamic_cast<cp::Practico*>(c);
+                if(clasePractico!=NULL){
+                    DtInfoClase* dtInfoClase = new DtInfoClase(clasePractico->getId(), 
+                    clasePractico->getNombre(), clasePractico->getEmailDocentes());
+                    dtInfoClases.push_back(dtInfoClase);
+                }
+            }
+        }
+    }
+    return dtInfoClases;
 }
 
 Asignatura::~Asignatura() {}

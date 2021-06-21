@@ -9,6 +9,7 @@
 #include "interface/ICtrlEliminarAsignatura.h"
 #include "interface/ICtrlAsisteEnVivo.h"
 #include "interface/ICtrlEnvioMensaje.h"
+#include "interface/ICtrlListadoDeClases.h"
 
 class Fabrica{
     private:
@@ -24,6 +25,7 @@ class Fabrica{
         static ICtrlEliminarAsignatura* getICtrlEliminarAsignatura();
         static ICtrlEnvioMensaje* getICtrlEnvioMensaje();
         static ICtrlAsisteEnVivo* getICtrlAsisteEnVivo();
+        static ICtrlListadoDeClases* getICtrlListadoDeClases();
         
         ~Fabrica();
         
