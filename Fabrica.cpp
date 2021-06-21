@@ -46,7 +46,6 @@ ICtrlEnvioMensaje* Fabrica::getICtrlEnvioMensaje() {
     return new CtrlEnvioMensaje();
 }
 
-/*
 ICtrlAsisteEnVivo* Fabrica::getICtrlAsisteEnVivo() {
     return new CtrlAsisteEnVivo();
-}*/
+}

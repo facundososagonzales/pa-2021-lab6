@@ -39,4 +39,14 @@ void Asignatura::addClase(Clase* clase) {
     this->clases.push_back (clase);
 }
 
+list<int> Asignatura::getClasesOnline(){
+    list<int> idClases;
+    for(Clase* c : this->clases){
+        if(c->getRutaVideo()=="PENDIENTE"){
+            idClases.push_back(c->getId());
+        } 
+    }
+    return idClases;
+}
+
 Asignatura::~Asignatura() {}

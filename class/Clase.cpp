@@ -132,4 +132,13 @@ Clase::Clase(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo,
         return part;
     }
 
+    void Clase::agregarAsistenciaOnline(Estudiante* estudianteLog){
+        time_t fecha = time(0); tm* now = localtime(&fecha);
+        DtFecha dtf = DtFecha(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
+        DtHora* dth = new DtHora(dtf,now->tm_hour,now->tm_min,now->tm_sec);
+
+        AsisteEnVivo* asisteEnVivo = new AsisteEnVivo(dth, NULL, estudianteLog);
+        this->asistenciasEnvivo.push_back(asisteEnVivo);
+    }
+
     Clase::~Clase(){};

@@ -24,6 +24,7 @@ public:
     void setAsignaturas(list<Asignatura*>);
 
     void eliminarInscripcion(Asignatura*);
+    list<string> devolverInscriptos();
 
     ~Estudiante();
 };

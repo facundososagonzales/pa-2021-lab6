@@ -36,4 +36,12 @@ void Estudiante::eliminarInscripcion(Asignatura* asig) {
     this->asignaturas.remove(a);
 }
 
+list<string> Estudiante::devolverInscriptos(){
+    list<string> asignaturas;
+    for(Asignatura* a : this->asignaturas){
+        asignaturas.push_back(a->getCodigo());
+    }
+    return asignaturas;
+}
+
 Estudiante::~Estudiante(){}

@@ -22,6 +22,7 @@ void inscripcionAsignatura();
 void inicioDeClase();
 void eliminarAsignatura();
 void envioMensaje();
+void asisteEnVivo();
 
 void menu(){
 		Fabrica* fab = Fabrica::getInstancia();
@@ -48,7 +49,8 @@ void menu(){
 			cout <<"__________6. Envio Mensaje_________________"<<endl;
 		}		
 		cout <<"__________7. Eliminar Asignatura____________"<<endl;
-		cout <<"__________8. Salir__________________________"<<endl;
+		cout <<"__________8. Asiste en Vivo_________________"<<endl;
+		cout <<"__________9. Salir__________________________"<<endl;
 		cout <<"____________________________________________"<<endl;
 		cout <<"OPCION: ";
 }
@@ -62,7 +64,7 @@ int main(){
 	int opcion;
 	menu();
 	cin >> opcion;
-	while(opcion != 8){
+	while(opcion != 9){
 		switch(opcion){
 			case 1: iniciarSesion();  			   						  break;
 
@@ -78,6 +80,8 @@ int main(){
 			case 6: if(icau->isLogged()){envioMensaje();}		   	  	  break;
 			
 			case 7: eliminarAsignatura(); 						          break;
+
+			case 8: asisteEnVivo(); 							          break;
 			
 			default:
 				cout << "OPCIÓN INCORRECTA" << endl;
@@ -686,5 +690,93 @@ void envioMensaje() {
 		}
 	}else{
 		cout << "No se encuentra participando en ninguna clase en vivo.\n" << endl;
+	}
+}
+
+////////////////////////////////////////////> Operaciones I <//////////////////////////////////////////////////
+
+void asisteEnVivo(){
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"________________Asiste en Vivo_______________"<< endl;
+	cout <<"_____________________________________________\n" <<endl;
+
+	Fabrica* fab = Fabrica::getInstancia();
+	ICtrlAsisteEnVivo* icav = fab->getICtrlAsisteEnVivo();
+
+	list<string> asignaturas = icav->asignaturasInscripto();
+	
+	string codigo;
+	if (!asignaturas.empty()) {
+		bool existeEnLista = false;
+		do {
+			for (string s : asignaturas) {
+				cout << "Asignatura: " + s << endl;
+			}
+			cout << "\nSeleccionar la asignatura de la que desea ver las clases en vivo: ";
+			cin >> codigo;
+			cout << "\n";
+
+			for (string s : asignaturas) {
+				if (s == codigo) {
+					existeEnLista = true;
+				}
+			}
+			if (!existeEnLista) {
+				cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
+			}
+
+		}while (!existeEnLista);
+
+		list<int> clases = icav->clasesOnlineDisponibles(codigo);
+		int id;
+		existeEnLista = false;
+		
+		do{
+			for (int c : clases) {
+				cout << "Clase: " << c << endl;
+			}
+			cout << "\nSeleccionar la Clase a la cual desea asistir: ";
+			cin >> id;
+
+			for (int c : clases) {
+				if (c == id) {
+					existeEnLista = true;
+				}
+			}
+			if (!existeEnLista) {
+				cout << "Error al ingresar clase, intente de nuevo\n" << endl;
+			}
+
+		}while (!existeEnLista);
+
+		DtAsistir dtAsistir = icav->selectClase(id);
+		
+		bool salir;
+		string confirmar;
+		do {
+			salir = false;
+
+			cout << "\nCodigo Asignatura: " << dtAsistir.getCodigo() << endl;
+			cout << "Id Clase: " << dtAsistir.getId() << endl;
+
+			cout << "\nDesea asistir a la clase en vivo? (s/n): " ;
+			cin >> confirmar;
+			cout << "\n";
+
+			if (confirmar == "s" || confirmar == "n") {
+				salir = true;
+			}
+			else {
+				cout << "opcion incorrecta, intente de nuevo" << endl;
+			}
+		} while (!salir);
+
+		if (confirmar == "s") {
+			icav->asistirClaseEnVivo();
+			cout << "Estas asistiendo a la clase " << id << endl;
+		}
+	}else{
+		cout << "\nNo existen asignaturas a las cuales este inscripto" << endl;
 	}
 }

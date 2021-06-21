@@ -60,6 +60,7 @@ public:
     bool existeDocenteEnClase(string);
     list<DtParticipacion*> getDtParticipaciones();
     Participacion* buscarParticipacion(int);
+    void agregarAsistenciaOnline(Estudiante*);
 
     ~Clase();
 };

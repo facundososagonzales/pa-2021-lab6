@@ -2,25 +2,25 @@
 
 AsisteEnVivo::AsisteEnVivo(){}
 
-AsisteEnVivo::AsisteEnVivo(DtHora inicio, DtHora fin, Estudiante* estudiante){
+AsisteEnVivo::AsisteEnVivo(DtHora* inicio, DtHora* fin, Estudiante* estudiante){
     this->inicio=inicio;
     this->fin=fin;
     this->estudiante=estudiante;    
 }
 
-DtHora AsisteEnVivo::getInicio() {
+DtHora* AsisteEnVivo::getInicio() {
     return this->inicio;
 }
 
-void AsisteEnVivo::setInicio(DtHora inicio) {
+void AsisteEnVivo::setInicio(DtHora* inicio) {
     this->inicio=inicio;
 }
 
-DtHora AsisteEnVivo::getFin() {
+DtHora* AsisteEnVivo::getFin() {
     return this->fin;
 }
 
-void AsisteEnVivo::setFin(DtHora fin) {
+void AsisteEnVivo::setFin(DtHora* fin) {
     this->fin=fin;
 }
 

@@ -8,18 +8,18 @@ class Estudiante;
 
 class AsisteEnVivo{
 private:
-    DtHora inicio;
-    DtHora fin;
+    DtHora* inicio;
+    DtHora* fin;
     Estudiante* estudiante;
 public:
     AsisteEnVivo();
-    AsisteEnVivo(DtHora, DtHora, Estudiante*);
+    AsisteEnVivo(DtHora*, DtHora*, Estudiante*);
 
-    void setInicio(DtHora);
-    DtHora getInicio();
+    void setInicio(DtHora*);
+    DtHora* getInicio();
 
-    void setFin(DtHora);
-    DtHora getFin();
+    void setFin(DtHora*);
+    DtHora* getFin();
 
     void setEstudiante(Estudiante*);
     Estudiante* getEstudiante();

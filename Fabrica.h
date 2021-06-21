@@ -23,7 +23,7 @@ class Fabrica{
         static ICtrlInicioDeClase* getICtrlInicioDeClase();
         static ICtrlEliminarAsignatura* getICtrlEliminarAsignatura();
         static ICtrlEnvioMensaje* getICtrlEnvioMensaje();
-        //static ICtrlAsisteEnVivo* getICtrlAsisteEnVivo();
+        static ICtrlAsisteEnVivo* getICtrlAsisteEnVivo();
         
         ~Fabrica();
         

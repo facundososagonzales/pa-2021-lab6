@@ -3,10 +3,12 @@
 
 #include<iostream>
 #include "../handler/HandlerUsuario.h"
+#include "../handler/HandlerClase.h"
+#include "../handler/HandlerAsignatura.h"
 #include "../interface/ICtrlAsisteEnVivo.h"
 
 using namespace std;
-/*
+
 class CtrlAsisteEnVivo : public ICtrlAsisteEnVivo {
 private:
     string codigo;
@@ -18,6 +20,6 @@ public:
     DtAsistir selectClase(int);
     void asistirClaseEnVivo();
     ~CtrlAsisteEnVivo();
-};*/
+};
 
 #endif

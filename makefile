@@ -1,7 +1,7 @@
 OTH=main.o Fabrica.o
 CLASS=class/Asignatura.o class/AsisteDiferido.o class/AsisteEnVivo.o class/Clase.o class/Docente.o class/Estudiante.o class/Monitoreo.o class/Participacion.o class/Practico.o class/Rol.o class/Sesion.o class/Teorico.o class/Usuario.o
 DATATYPE=dataType/DtIniciarClase.o dataType/DtAsignatura.o dataType/DtAsistir.o dataType/DtClaseAsistencia.o dataType/DtDictadoAsignatura.o dataType/DtUsuario.o dataType/DtDocente.o dataType/DtEstudiante.o dataType/DtFecha.o dataType/DtHora.o dataType/DtIniciarClaseFull.o dataType/DtIniciarMonitoreo.o dataType/DtInstanciaClase.o dataType/DtParticipacion.o dataType/DtTime.o dataType/Log.o
-CTRL=ctrl/CtrlAltaUsuario.o ctrl/CtrlAltaAsignatura.o ctrl/CtrlAsignacionDocAsignatura.o ctrl/CtrlInscripcionAsignatura.o ctrl/CtrlInicioDeClase.o ctrl/CtrlEliminarAsignatura.o ctrl/CtrlEnvioMensaje.o
+CTRL=ctrl/CtrlAltaUsuario.o ctrl/CtrlAltaAsignatura.o ctrl/CtrlAsignacionDocAsignatura.o ctrl/CtrlInscripcionAsignatura.o ctrl/CtrlInicioDeClase.o ctrl/CtrlEliminarAsignatura.o ctrl/CtrlEnvioMensaje.o ctrl/CtrlAsisteEnVivo.o
 HANDLER=handler/HandlerUsuario.o handler/HandlerAsignatura.o handler/HandlerClase.o
 EXEC=exe
 OBJ=$(OTH) $(CLASS) $(DATATYPE) $(CTRL) $(HANDLER)
@@ -47,6 +47,7 @@ ctrl/CtrlInscripcionAsignatura.o: ctrl/CtrlInscripcionAsignatura.cpp
 ctrl/CtrlInicioDeClase.o: ctrl/CtrlInicioDeClase.cpp
 ctrl/CtrlEliminarAsignatura.o: ctrl/CtrlEliminarAsignatura.cpp
 ctrl/CtrlEnvioMensaje.o: ctrl/CtrlEnvioMensaje.cpp
+ctrl/CtrlAsisteEnVivo.o: ctrl/CtrlAsisteEnVivo.cpp
 handler/HandlerUsuario.o: handler/HandlerUsuario.cpp
 handler/HandlerAsignatura.o: handler/HandlerAsignatura.cpp
 handler/HandlerClase.o: handler/HandlerClase.cpp

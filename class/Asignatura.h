@@ -31,6 +31,8 @@ public:
 
     void addClase(Clase*);
     list<Clase*> getClases();
+    
+    list<int> getClasesOnline();
 
 
 
