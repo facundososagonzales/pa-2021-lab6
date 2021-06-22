@@ -1,6 +1,7 @@
 #include "../ctrl/CtrlInicioDeClase.h"
 #include "../handler/HandlerUsuario.h"
 #include "../handler/HandlerClase.h"
+#include "../handler/HandlerAsignatura.h"
 #include "../class/Sesion.h"
 #include "../class/Teorico.h"
 #include "../class/Monitoreo.h"
@@ -14,7 +15,7 @@ using namespace std;
 CtrlInicioDeClase::CtrlInicioDeClase(){}
 
 list<string> CtrlInicioDeClase::asignaturasAsignadas(){
-    list<string> asignaturasAsignadas;                     //Verificar si esta vacia en el main
+    list<string> asignaturasAsignadas;                 
     Sesion* sesion = Sesion::getInstancia();
     HandlerUsuario* hU = HandlerUsuario::getInstancia();
     
@@ -141,7 +142,38 @@ void CtrlInicioDeClase::iniciarClase(){
 }
 
 void CtrlInicioDeClase::cargarClases(){
-    
+    time_t fecha = time(0); tm* now = localtime(&fecha);
+    DtFecha dtf = DtFecha(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
+    DtHora dth = DtHora(dtf,now->tm_hour,now->tm_min,now->tm_sec);
+
+    time_t fecha1 = time(0); tm* now1 = localtime(&fecha);
+    DtFecha* dtf1 = new DtFecha(now1->tm_mday,now1->tm_mon+1,now1->tm_year+1900);
+    DtHora* dth1 = new DtHora(dtf,now1->tm_hour,now1->tm_min,now1->tm_sec);
+
+    HandlerUsuario* hU = HandlerUsuario::getInstancia();
+    HandlerAsignatura* hA = HandlerAsignatura::getInstancia();
+    HandlerClase* hC = HandlerClase::getInstancia();
+    Asignatura* pp1 = hA->buscarAsignatura("PP-1");
+    Usuario* test = hU->buscarUsuario("test");
+    Usuario* estudiante = hU->buscarUsuario("est");
+    Docente* doc = dynamic_cast<Docente*>(test);
+    Estudiante* est = dynamic_cast<Estudiante*>(est);
+    list<Docente*> docentes; docentes.push_back(doc);
+
+    for(Rol* r: doc->getRoles()){
+        if(r->getAsignatura()->getCodigo()==pp1->getCodigo()){   
+            ct::Teorico* claseTeorico = new ct::Teorico(500,"ClaseT1",dth,docentes);
+            claseTeorico->setRutaVideo("PENDIENTE");
+            claseTeorico->setCantAsiste(0);
+            AsisteEnVivo* asiste = new AsisteEnVivo(dth1,dth1,est);
+            claseTeorico->addAsisteEnVivo(asiste);
+            Participacion* mensaje = new Participacion(5001,dth,"Hola"); mensaje->setRespuestaA(NULL);
+            Participacion* mensaje1 = new Participacion(5002,dth,"Holaa"); mensaje->setRespuestaA(mensaje);
+            claseTeorico->addParticipacion(mensaje); claseTeorico->addParticipacion(mensaje1);
+            r->getAsignatura()->addClase(claseTeorico);
+            hC->addClase(claseTeorico);
+        }
+    }
 }
 
 CtrlInicioDeClase::~CtrlInicioDeClase(){}

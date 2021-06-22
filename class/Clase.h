@@ -63,6 +63,7 @@ public:
     void agregarAsistenciaOnline(Estudiante*);
     list<string> getEmailDocentes();
     list<string> getEmailEstudiantes();
+    bool existeMensaje(int);
 
     virtual ~Clase();
 };

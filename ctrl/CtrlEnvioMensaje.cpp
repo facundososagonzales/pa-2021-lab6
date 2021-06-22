@@ -7,6 +7,7 @@
 CtrlEnvioMensaje::CtrlEnvioMensaje(){}
 
     list<int> CtrlEnvioMensaje::claseOnlineAsistiendo(){
+        this->idp=0;
         Sesion* sesion = Sesion::getInstancia();
         string usuarioName = sesion->getUsuario();
         HandlerUsuario* hU = HandlerUsuario::getInstancia();
@@ -61,9 +62,21 @@ CtrlEnvioMensaje::CtrlEnvioMensaje(){}
         time_t fecha = time(0); tm* now = localtime(&fecha);
 		DtFecha dtf = DtFecha(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
 		DtHora dth = DtHora(dtf,now->tm_hour,now->tm_min,now->tm_sec);
+
+        HandlerClase* hU = HandlerClase::getInstancia();
+        bool existe=true;
+        int idMensaje;
+        srand(time(NULL));
+        do{
+            idMensaje =(rand() % 10000) + 5000;
+            if(!hU->buscarClase(this->id)->existeMensaje(idMensaje)){
+                existe=false;
+            }
+        }while(existe);
         
-        Participacion* part = new Participacion(this->id, dth, this->texto);
+        Participacion* part = new Participacion(idMensaje, dth, this->texto);
         part->setRespuestaA(p);
+        clase->addParticipacion(part);
     }
 
     CtrlEnvioMensaje::~CtrlEnvioMensaje(){}

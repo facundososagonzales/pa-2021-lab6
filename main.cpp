@@ -64,8 +64,10 @@ int main(){
 	Fabrica* fab = Fabrica::getInstancia();
 	ICtrlAltaAsignatura* icaa = fab->getICtrlAltaAsignatura();
 	ICtrlAltaUsuario* icau = fab->getICtrlAltaUsuario();
+	ICtrlInicioDeClase* icic = fab->getICtrlInicioDeClase();
 	icaa->cargarAsignaturas();
 	icau->cargarUsuarios();
+	icic->cargarClases();
 	int opcion;
 	menu();
 	cin >> opcion;
@@ -655,7 +657,6 @@ void envioMensaje() {
 			salir = false;
 			cout << "\nEl mensaje enviado es respuesta de otro mensaje? (s/n): " ;
 			cin >> confirmar;
-			cout << "\n";
 
 			if (confirmar == "s" || confirmar == "n") {
 				salir = true;
@@ -666,33 +667,50 @@ void envioMensaje() {
 		} while (!salir);
 
 		if (confirmar == "s") {
-			int idR;
-			cout << "\nIngrese el id del mensaje a responder: " ;
-			cin >> idR;
-			icem->responder(idR);			
+			if(!dtPs.empty()){
+				int idR;
+				bool existeEnLista=false;
+				cout << "\nIngrese el id del mensaje a responder: " ;
+				cin >> idR;
+				for(DtParticipacion* dtP : dtPs){
+					if(idR==dtP->getId())
+						existeEnLista=true;		
+				}
+				if(existeEnLista){
+					icem->responder(idR);
+				}
+			}
 		}
 
-		string texto;
-		cout << "\nIngrese el texto del mensaje: " ;
-		cin >> texto;
-		icem->ingresarTexto(texto);
+		if((confirmar=="s" && existeEnLista) || confirmar=="n"){
+			string texto;
+			cout << "\nIngrese el texto del mensaje: " ;
+			cin >> texto;
+			icem->ingresarTexto(texto);
 
-		do {
-			salir = false;
-			cout << "\nDesea enviar el mensaje? (s/n): " ;
-			cin >> confirmar;
-			cout << "\n";
+			do {
+				salir = false;
+				cout << "\nDesea enviar el mensaje? (s/n): " ;
+				cin >> confirmar;
 
-			if (confirmar == "s" || confirmar == "n") {
-				salir = true;
+				if (confirmar == "s" || confirmar == "n") {
+					salir = true;
+				}
+				else {
+					cout << "opcion incorrecta, intente de nuevo" << endl;
+				}
+			} while (!salir);
+
+			if (confirmar == "s") {
+				icem->enviarMensaje();
+				cout << "El mensaje se envio con exito" << endl;
 			}
-			else {
-				cout << "opcion incorrecta, intente de nuevo" << endl;
+		}else{
+			if(dtPs.empty()){
+				cout << "No hay mensajes los cuales responder" << endl;
+			}else{
+				cout << "El id ingresado no pertece a ningun mensaje" << endl;
 			}
-		} while (!salir);
-
-		if (confirmar == "s") {
-			icem->enviarMensaje();
 		}
 	}else{
 		cout << "No se encuentra participando en ninguna clase en vivo.\n" << endl;

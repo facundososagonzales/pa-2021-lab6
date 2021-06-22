@@ -157,4 +157,14 @@ Clase::Clase(int id, string nombre, DtHora inicio, DtHora fin, string rutaVideo,
         return emailEstudiantes;
     }
 
+    bool Clase::existeMensaje(int idM){
+        bool existe=false;
+        for(Participacion* p : this->participaciones){
+            if(p->getId()==idM){
+                existe=true;
+            }
+        }
+        return existe;
+    }
+
     Clase::~Clase(){};
