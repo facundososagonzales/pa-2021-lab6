@@ -157,7 +157,7 @@ void CtrlInicioDeClase::cargarClases(){
     Usuario* test = hU->buscarUsuario("test");
     Usuario* estudiante = hU->buscarUsuario("est");
     Docente* doc = dynamic_cast<Docente*>(test);
-    Estudiante* est = dynamic_cast<Estudiante*>(est);
+    Estudiante* est = dynamic_cast<Estudiante*>(estudiante);
     list<Docente*> docentes; docentes.push_back(doc);
 
     for(Rol* r: doc->getRoles()){
@@ -167,9 +167,9 @@ void CtrlInicioDeClase::cargarClases(){
             claseTeorico->setCantAsiste(0);
             AsisteEnVivo* asiste = new AsisteEnVivo(dth1,dth1,est);
             claseTeorico->addAsisteEnVivo(asiste);
-            Participacion* mensaje = new Participacion(5001,dth,"Hola"); mensaje->setRespuestaA(NULL);
-            Participacion* mensaje1 = new Participacion(5002,dth,"Holaa"); mensaje->setRespuestaA(mensaje);
-            claseTeorico->addParticipacion(mensaje); claseTeorico->addParticipacion(mensaje1);
+            //Participacion* mensaje = new Participacion(5001,dth,"Hola"); mensaje->setRespuestaA(NULL);
+            //Participacion* mensaje1 = new Participacion(5002,dth,"Holaa"); mensaje->setRespuestaA(mensaje);
+            //claseTeorico->addParticipacion(mensaje); claseTeorico->addParticipacion(mensaje1);
             r->getAsignatura()->addClase(claseTeorico);
             hC->addClase(claseTeorico);
         }
