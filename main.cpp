@@ -133,7 +133,8 @@ void altaUsuario(){
 	Fabrica* fab = Fabrica::getInstancia();
 	ICtrlAltaUsuario* icau = fab->getICtrlAltaUsuario();
 	cout << "Ingresar nombre del Usuario: ";
-	cin >> nombre;
+	cin.ignore(100,'\n');
+	getline(cin,nombre);
 	cout << "Ingresar url de la imagen del Usuario: ";
 	cin >> url;	
 	cout << "Ingresar email del Usuario: ";
@@ -145,7 +146,8 @@ void altaUsuario(){
 	if(opcion==1){		
 		string instituto;
 		cout << "Ingresar instituto del Docente: ";
-		cin >> instituto;
+		cin.ignore(100,'\n');
+		getline(cin,instituto);
 		DtDocente dtD = DtDocente(nombre,url,email,pass,instituto);
 		icau->ingresarDatosPerfil(dtD);
 		icau->ingresarDocente(instituto);
@@ -179,7 +181,8 @@ void altaAsignatura(){
 	ICtrlAltaAsignatura* icaa = fab->getICtrlAltaAsignatura();
 	
 	cout << "\nIngrese el nombre de la Asignatura: ";
-	cin >> nombre;
+	cin.ignore(100,'\n');
+	getline(cin,nombre);
 	cout << "Ingrese el codigo de la Asignatura: ";
 	cin >> codigo;
 
@@ -465,7 +468,8 @@ void inicioDeClase(){
 		}while(!existeEnLista);
 
 		cout << "Ingrese el nombre de la clase: ";
-		cin >> nombre;
+		cin.ignore(100,'\n');
+		getline(cin,nombre);
 		time_t fecha = time(0); tm* now = localtime(&fecha);
 		DtFecha dtf = DtFecha(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
 		DtHora dth = DtHora(dtf,now->tm_hour,now->tm_min,now->tm_sec);
@@ -685,7 +689,8 @@ void envioMensaje() {
 		if((confirmar=="s" && existeEnLista) || confirmar=="n"){
 			string texto;
 			cout << "\nIngrese el texto del mensaje: " ;
-			cin >> texto;
+			cin.ignore(100,'\n');
+			getline(cin,texto);
 			icem->ingresarTexto(texto);
 
 			do {

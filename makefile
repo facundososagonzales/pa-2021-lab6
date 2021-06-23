@@ -7,8 +7,7 @@ EXEC=exe
 OBJ=$(OTH) $(CLASS) $(DATATYPE) $(CTRL) $(HANDLER)
 
 main: $(OBJ) 
-	g++ $(OBJ) -o $(EXEC)
-	find . -name '*.o' -delete
+	g++ $(OBJ) -o $(EXEC)	
 	./$(EXEC)
 
 class/Asignatura.o: class/Asignatura.cpp
