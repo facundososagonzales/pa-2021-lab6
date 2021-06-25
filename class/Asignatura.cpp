@@ -2,6 +2,7 @@
 #include "../class/Teorico.h"
 #include "../class/Monitoreo.h"
 #include "../class/Practico.h"
+#include "../handler/HandlerClase.h"
 
 Asignatura::Asignatura(){}
 
@@ -78,6 +79,13 @@ list<DtInfoClase*> Asignatura::getInfoClases(){
         }
     }
     return dtInfoClases;
+}
+
+void Asignatura::eliminarAsignatura(){
+    HandlerClase* hC = hC->getInstancia();
+    for(Clase* c : this->clases){
+        hC->eliminarClase(c->getId());
+    }
 }
 
 Asignatura::~Asignatura() {}

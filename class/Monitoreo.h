@@ -16,6 +16,7 @@ namespace cm{
 
         void addEstudiante(Estudiante*);
         list <Estudiante*> getEstudiantes();
+        list<string> getEmailEstudiantes();
 
         ~Monitoreo();
     };

@@ -37,6 +37,8 @@ void CtrlEliminarAsignatura::eliminarAsignatura() {
             }
         }            
     }
+    asig->eliminarAsignatura();
+    hA->eliminarAsignatura(asig->getCodigo());
 }
 
 CtrlEliminarAsignatura::~CtrlEliminarAsignatura() {}

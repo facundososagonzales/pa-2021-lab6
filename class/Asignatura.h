@@ -36,6 +36,7 @@ public:
 
     list<int> getClasesOnline();
     list<DtInfoClase*> getInfoClases();
+    void eliminarAsignatura();
 
 
 

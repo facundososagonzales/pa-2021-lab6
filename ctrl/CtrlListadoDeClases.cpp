@@ -4,7 +4,7 @@
 #include "../class/Sesion.h"
 
 list<string> CtrlListadoDeClases::asignaturasAsignadas(){
-    list<string> asignaturasAsignadas;                     //Verificar si esta vacia en el main
+    list<string> asignaturasAsignadas;
     Sesion* sesion = Sesion::getInstancia();
     HandlerUsuario* hU = HandlerUsuario::getInstancia();
     

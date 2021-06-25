@@ -11,6 +11,8 @@
 #include "dataType/DtEstudiante.h"
 #include "dataType/DtAsignatura.h"
 #include "dataType/DtParticipacion.h"
+#include "dataType/DtInfoMonitoreo.h"
+#include "dataType/DtInfoTeorico.h"
 
 using namespace std;
 
@@ -372,62 +374,68 @@ void inscripcionAsignatura(){
 	ICtrlInscripcionAsignatura* icia = fab->getICtrlInscripcionAsignatura();
 
 	string confirmar, codigo;
+	list<string> asignaturas = icia->asignaturaNoInscripto();
+	if(!asignaturas.empty()){
+		do{
+			
+			asignaturas = icia->asignaturaNoInscripto();			
+			if(!asignaturas.empty()){
+				bool existeEnLista=false;
 
-	do{
-		
-		list<string> asignaturas = icia->asignaturaNoInscripto();
-		
-		if(!asignaturas.empty()){
-			bool existeEnLista=false;
-
-			do{
-				for(string s: asignaturas){
-					cout << "Asignatura: " + s << endl;
-				}
-				cout << "\nSeleccionar la asignatura a la que se desea inscribir: ";
-				cin >> codigo;
-				cout << "\n";
-
-				for(string s: asignaturas){
-					if(s==codigo){
-						existeEnLista=true;
+				do{
+					for(string s: asignaturas){
+						cout << "Asignatura: " + s << endl;
 					}
-				}
-				if(!existeEnLista){
-					cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
-				}
+					cout << "\nSeleccionar la asignatura a la que se desea inscribir: ";
+					cin >> codigo;
+					cout << "\n";
 
-			}while(!existeEnLista);
+					for(string s: asignaturas){
+						if(s==codigo){
+							existeEnLista=true;
+						}
+					}
+					if(!existeEnLista){
+						cout << "Error al ingresar asignatura, intente de nuevo\n" << endl;
+					}
 
-			icia->seleccionarAsignatura(codigo);
+				}while(!existeEnLista);
 
-			do{
-				cout << "Confria la inscripcion a la asignatura " + codigo +"? (s/n): ";
-				cin >> confirmar;
+				icia->seleccionarAsignatura(codigo);
 
-				if(confirmar=="s"){
-					icia->darDeAltaInscripcion();
-				}else if(confirmar!="n"){
-					cout << "opcion incorrecta, intente de nuevo" << endl;
-				}
-			}while(confirmar!="s" && confirmar!="n");
+				do{
+					cout << "Confria la inscripcion a la asignatura " + codigo +"? (s/n): ";
+					cin >> confirmar;
 
-			bool salir;
-			do{
-				salir=false;
-				cout<< "\nDesea seguir inscribiendose a asignaturas? (s/n): ";
-				cin >> confirmar;
-				cout <<"\n";
+					if(confirmar=="s"){
+						icia->darDeAltaInscripcion();
+					}else if(confirmar!="n"){
+						cout << "opcion incorrecta, intente de nuevo" << endl;
+					}
+				}while(confirmar!="s" && confirmar!="n");
 
-				if(confirmar=="s" || confirmar=="n"){
-					salir=true;
-				}else{
-					cout << "opcion incorrecta, intente de nuevo" << endl;
-				}
-			}while(!salir);
+				bool salir;
+				do{
+					salir=false;
+					cout<< "\nDesea seguir inscribiendose a asignaturas? (s/n): ";
+					cin >> confirmar;
+					cout <<"\n";
 
-		}
-	}while(confirmar!="n");
+					if(confirmar=="s" || confirmar=="n"){
+						salir=true;
+					}else{
+						cout << "opcion incorrecta, intente de nuevo" << endl;
+					}
+				}while(!salir);
+
+			}else{
+				confirmar="n";
+				cout << "No hay asignaturas disponibles para inscribirse" << endl;
+			}
+		}while(confirmar!="n");
+	}else{
+		cout << "No hay asignaturas disponibles para inscribirse" << endl;
+	}
 }
 
 ////////////////////////////////////////////> Operaciones F <//////////////////////////////////////////////////
@@ -467,9 +475,10 @@ void inicioDeClase(){
 
 		}while(!existeEnLista);
 
-		cout << "Ingrese el nombre de la clase: ";
+		cout << "Ingrese el nombre de la clase: ";		
 		cin.ignore(100,'\n');
 		getline(cin,nombre);
+		cout << "\n";
 		time_t fecha = time(0); tm* now = localtime(&fecha);
 		DtFecha dtf = DtFecha(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
 		DtHora dth = DtHora(dtf,now->tm_hour,now->tm_min,now->tm_sec);
@@ -478,76 +487,94 @@ void inicioDeClase(){
 		bool monitoreo = icidc->seleccionarAsignatura(dtic);
 		int habilitados=0;
 		if(monitoreo){
-			do{
-				list<string> inscriptos = icidc->inscriptosAsignatura();
-				bool existeEnLista=false;
-				do{
-					cout << "\nEstudiantes que puede habilitar: \n" << endl;
-					for(string s: inscriptos){
-						cout << "	Estudiante: " + s << endl;
-					}
-					cout << "\nSeleccionar el estudiante que desea habilitar: ";
-					cin >> email;
-					cout << "\n";
+			list<string> inscriptos = icidc->inscriptosAsignatura();
+			list<string> inscriptos2 = icidc->inscriptosAsignatura();
+			if(!inscriptos.empty()){
+				do{				
+					bool existeEnLista=false;
+					if(!inscriptos2.empty()){
+						do{
+							inscriptos = icidc->inscriptosAsignatura();
+							cout << "Estudiantes que puede habilitar: \n" << endl;
+							for(string s: inscriptos){
+								cout << "	Estudiante: " + s << endl;
+							}
+							cout << "\nSeleccionar el estudiante que desea habilitar: ";
+							cin >> email;
+							cout << "\n";
 
-					for(string s: inscriptos){
-						if(s==email){
-							existeEnLista=true;
-						}
-					}
-					if(!existeEnLista){
-						cout << "Error al ingresar el estudiante, intente de nuevo\n" << endl;
-					}
-				}while(!existeEnLista);
-				icidc->habilitarEstudiante(email);
-				habilitados++;
+							for(string s: inscriptos){
+								if(s==email){
+									existeEnLista=true;
+								}
+							}
+							if(!existeEnLista){
+								cout << "Error al ingresar el estudiante, intente de nuevo\n" << endl;
+							}
+						}while(!existeEnLista);
+						icidc->habilitarEstudiante(email);
+						habilitados++;
 
-				do{
-					salir=false;
-					cout<< "Desea seguir habilitando estudiantes? (s/n): ";
-					cin >> confirmar;
-					cout <<"\n";
+						do{
+							salir=false;
+							cout<< "Desea seguir habilitando estudiantes? (s/n): ";
+							cin >> confirmar;
+							cout <<"\n";
 
-					if(confirmar=="s" || confirmar=="n"){
-						salir=true;
+							if(confirmar=="s" || confirmar=="n"){
+								salir=true;
+							}else{
+								cout << "opcion incorrecta, intente de nuevo" << endl;
+							}						
+						}while(!salir);
+					inscriptos2 = icidc->inscriptosAsignatura();
 					}else{
-						cout << "opcion incorrecta, intente de nuevo" << endl;
+						confirmar="n";
 					}
-				}while(!salir);
 
-			}while(habilitados<15 && confirmar!="n");
-			if(habilitados==15){
-				cout << "Ha habilitado el maximo de 15 estudiantes" << endl;
+				}while(habilitados<15 && confirmar!="n");
+
+				if(habilitados==15){
+					cout << "Ha habilitado el maximo de 15 estudiantes" << endl;
+				}
 			}
 		}
-		DtIniciarClaseFull* dticf = icidc->datosIngresados(); // preguntar por cuales datos hay que mostrar y si la fecha es la del sistema
-		cout << "id: " << dticf->getId() << endl;
-		cout << "nombre: " + dticf->getNombre() << endl;
-		cout << "Fecha de inicio: " << dticf->getFechaHora().getFecha() <<  " - " << dticf->getFechaHora().getHora() << ":"
-			 << dticf->getFechaHora().getMinuto() << ":" << dticf->getFechaHora().getSegundo() << endl;
-		DtIniciarMonitoreo* dtim = dynamic_cast<DtIniciarMonitoreo*>(dticf);
-		if(dtim!=NULL){
-			cout << "Habilitados: \n";
-			for(string s: dtim->getHabilitados()){
-				cout << "	Estudiante: " + s << endl;
+		if(habilitados!=0){
+			list<string> inscriptos = icidc->inscriptosAsignatura();
+			if(inscriptos.empty()){
+				cout << "No hay mas estudiantes para habilitar\n" << endl;
 			}
-		}
-
-		do{
-			salir=false;
-			cout<< "\nDesea iniciar la clase? (s/n): ";
-			cin >> confirmar;
-			cout <<"\n";
-
-			if(confirmar=="s" || confirmar=="n"){
-				salir=true;
-			}else{
-				cout << "opcion incorrecta, intente de nuevo" << endl;
+			DtIniciarClaseFull* dticf = icidc->datosIngresados(); // preguntar por cuales datos hay que mostrar y si la fecha es la del sistema
+			cout << "id: " << dticf->getId() << endl;
+			cout << "nombre: " + dticf->getNombre() << endl;
+			cout << "Fecha de inicio: " << dticf->getFechaHora().getFecha() <<  " - " << dticf->getFechaHora().getHora() << ":"
+				<< dticf->getFechaHora().getMinuto() << ":" << dticf->getFechaHora().getSegundo() << endl;
+			DtIniciarMonitoreo* dtim = dynamic_cast<DtIniciarMonitoreo*>(dticf);
+			if(dtim!=NULL){
+				cout << "Habilitados: \n";
+				for(string s: dtim->getHabilitados()){
+					cout << "	Estudiante: " + s << endl;
+				}
 			}
-		}while(!salir);
-		
-		if(confirmar=="s"){
-			icidc->iniciarClase();
+
+			do{
+				salir=false;
+				cout<< "\nDesea iniciar la clase? (s/n): ";
+				cin >> confirmar;
+				cout <<"\n";
+
+				if(confirmar=="s" || confirmar=="n"){
+					salir=true;
+				}else{
+					cout << "opcion incorrecta, intente de nuevo" << endl;
+				}
+			}while(!salir);
+			
+			if(confirmar=="s"){
+				icidc->iniciarClase();
+			}
+		}else{
+			cout << "No hay estudiantes inscriptos en la asignatura" << endl;
 		}
 	}else{
 		cout << "No se tiene ninguna asignatura asignada\n" << endl;
@@ -850,16 +877,30 @@ void listadoDeClases(){
 		for(DtInfoClase* dti : dtInfoClases){
 			cout << "Id: " << dti->getId() << " - Nombre: " << dti->getNombre() << endl;
 			cout << "Docentes: ";
-			int size = 0;
+			int size = 1;
 			for(string s : dti->getDocentes()){
-				if(dti->getDocentes().size()<size){
+				if(dti->getDocentes().size()!=size){
 					cout << s << ", ";
+					size++;
 				}else{
 					cout << s << endl;
-				}				
+				}
+
+			}
+			DtInfoMonitoreo* dtm = dynamic_cast<DtInfoMonitoreo*>(dti);
+			if(dtm!=NULL){
+				cout << "Estudiantes habilitados: ";
+				size = 1;
+				for(string e : dtm->getEstudiantes()){
+					if(dtm->getEstudiantes().size()!=size){
+						cout << e << ", ";
+						size++;
+					}else{
+						cout << e << endl;
+					}				
+				}
 			}
 		}
-
 	}else{
 		cout << "No se tiene ninguna asignatura asignada\n" << endl;
 	}

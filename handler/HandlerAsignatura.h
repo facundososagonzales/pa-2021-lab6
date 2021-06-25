@@ -19,6 +19,7 @@ public:
     Asignatura* buscarAsignatura(string);
     bool existeAsig(string);
     void addAsignatura(Asignatura*);
+    void eliminarAsignatura(string);
     virtual ~HandlerAsignatura();
 };
 

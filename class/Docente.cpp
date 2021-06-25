@@ -28,6 +28,8 @@ void Docente::setRoles(list<Rol*> roles) {
 
 void Docente::eliminarRol(Asignatura* asig) {
     Rol* r;
+    list<Rol*>::iterator it1;
+
     for (list<Rol*>::iterator it = this->roles.begin(); it != this->roles.end(); ++it) {
         if ((*it)->getAsignatura()->getCodigo() == asig->getCodigo()) {
             r = *it;
@@ -35,6 +37,7 @@ void Docente::eliminarRol(Asignatura* asig) {
     }
     this->roles.remove(r);
     //delete(r);
+    //this->roles.erase(it1);
 }
 
 list<string> Docente::getAsignaturasAsignadas(){

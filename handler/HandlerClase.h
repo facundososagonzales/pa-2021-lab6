@@ -18,6 +18,7 @@ public:
     void addClase(Clase*);
     bool existeClase(int);
     virtual ~HandlerClase();
+    void eliminarClase(int);
 };
 
 #endif

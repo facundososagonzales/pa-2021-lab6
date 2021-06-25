@@ -41,4 +41,8 @@ void HandlerClase::addClase(Clase* clase){
     this->clases.push_back(clase);
 }
 
+void HandlerClase::eliminarClase(int id){
+    this->clases.remove(this->buscarClase(id));
+}
+
 HandlerClase::~HandlerClase(){}

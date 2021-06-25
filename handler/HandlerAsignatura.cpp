@@ -48,4 +48,8 @@ void HandlerAsignatura::addAsignatura(Asignatura* asignatura){
     this->asignaturas.push_back(asignatura);
 }
 
+void HandlerAsignatura::eliminarAsignatura(string codigo){
+    this->asignaturas.remove(this->buscarAsignatura(codigo));
+}
+
 HandlerAsignatura::~HandlerAsignatura(){}

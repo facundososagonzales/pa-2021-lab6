@@ -18,4 +18,12 @@ list <Estudiante*> cm::Monitoreo::getEstudiantes() {
     return this->estudiantes;
 }
 
+list <string> cm::Monitoreo::getEmailEstudiantes() {
+    list<string> emailEst;
+    for(Estudiante* e : this->estudiantes){
+        emailEst.push_back(e->getemail());
+    }
+    return emailEst;
+}
+
 cm::Monitoreo::~Monitoreo(){}
