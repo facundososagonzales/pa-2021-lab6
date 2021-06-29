@@ -539,7 +539,7 @@ void inicioDeClase(){
 				}
 			}
 		}
-		if(habilitados!=0){
+		if(habilitados!=0 || !monitoreo){
 			list<string> inscriptos = icidc->inscriptosAsignatura();
 			if(inscriptos.empty()){
 				cout << "No hay mas estudiantes para habilitar\n" << endl;
@@ -885,7 +885,6 @@ void listadoDeClases(){
 				}else{
 					cout << s << endl;
 				}
-
 			}
 			DtInfoMonitoreo* dtm = dynamic_cast<DtInfoMonitoreo*>(dti);
 			if(dtm!=NULL){
@@ -899,8 +898,14 @@ void listadoDeClases(){
 						cout << e << endl;
 					}				
 				}
+			}else{
+				DtInfoTeorico* dtt = dynamic_cast<DtInfoTeorico*>(dti);
+				if (dtt!=NULL){
+					cout << "Cantidad de asistencia: " << dtt->getCantAsisten() << endl;
+				}
 			}
 		}
+		cout << "\n";
 	}else{
 		cout << "No se tiene ninguna asignatura asignada\n" << endl;
 	}
